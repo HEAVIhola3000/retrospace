@@ -8,51 +8,78 @@
 </head>
 <body>
 
-    <header id="Encabezado">
+    <header class="encabezado">
         <h1>RetroSpace</h1>
-        <p>Tu espacio. Tus amigos. Tus recuerdos</p>
+        <p>Tu espacio. Solo tu.</p>
     </header>
 
-    <nav id="navegacion">
-        <a href="index.html">Inicio</a> |
-        <a href="perfil.html">Mi perfil</a> |
-        <a href="login.html">Cerrar sesión</a>
+    <nav class="navegacion">
+        <a href="index.html">Inicio</a> 
+        <a href="perfil.html">Mi perfil</a> 
         <a href="amigos.html">Amigos</a>
+        <a href="login.html">Cerrar sesiónEjem</a>
     </nav>
 
     <main>
 
-        <section id="barra lateral">
-            <img src="https://placehold.co/150x150"
-                 alt="Foto de perfil">
-                 <p>NoMBRE DE USUARIO EJEMPLO</p>
-                 <p>seccion ejem 1</p>
-                 <p>seccion ejem 2</p>
-                 <p>seccion ejem 3</p>
+        <section id="Barralateral">
+            <div id="ImagenPerfil">
+             <img src="https://placehold.co/150x150" alt="Foto de perfil">
+            </div>
+
+            <div id="InfoPersonal">
+                 <p>Mi Usuario</p>
+                 <button id="BotonUsuario">Editar mi Usuario</button>
+                 <p>Artista Favorito</p>
+                 <button id="BotonArtista">Editar mi Artista</button>
+                 <p>Cancion Favorita</p>
+                 <button id="BotonCancion">Editar mi Cancion</button>
+            </div>
+
         </section>
 
-        <section id="InfoPersonal">
-            <h2>Informacion Personal</h2>
+        <section id="Amigos">
+            <div id="ContenedorAmigos">
+             <h2>MIS AMIGOS</h2>
+             <P>Amigo 1ejem</P>
+             <p>Amigo 2ejem</p>
+             <p>Amigo 3ejem</p>
+             <button id="BotonVerAmigos">Ver todos los amigos </button>
+            </div>
 
-            <p>Nombre</p>
-            <p>Fecha de nacimiento</p>
-            <p>Genero</p>
         </section>
 
         <section id="Muro">
             <h2>Mi Muro</h2>
 
-            <article>
-                <h3>Mi primera publicación EJEMPLO</h3>
-                <p>¡Hola! Esta es mi primera publicación en RetroSpace.</p>
-                <p>Comentarios: 0</p>
-            </article>
+            <form id="FormularioPublicacion" action="">
+                <textarea name="publicacion" id="TextoPublicacion" placeholder="¿Qué estas pensando?" required></textarea>
 
-            <article>
-                <h3>Mi música favorita EJEMPLO</h3>
-                <p>¡Pronto compartiré mis canciones favoritas!</p>
-                <p>Comentarios: 0</p>
+                <button type="submit">Publicar</button>
+
+            </form>
+
+         <article class="publicacion">
+
+             <h3>Mi primera publicacióne.jem</h3>
+
+             <p>¡Hola! Esta es mi primera publicación en RetroSpace.ejem</p>
+
+             <div class="listaComentarios">
+             <p>Comentarios</p>
+             <p><strong>Amigo 1ejem:</strong> ¡Qué buena publicación!ejem</p>
+             <p><strong>Amigo 2ejem:</strong> Bienvenidooo 💜ejem</p>
+             </div>
+
+             <form>
+             <input id="EscribirComentario" type="text" name="comentario" placeholder="Escribe un comentario..." required>
+
+             <button type="submit">Enviar</button>
+
+             </form>
+
             </article>
+            
         </section>
 
     </main>

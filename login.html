@@ -3,13 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RetroSpace </title>
+    <title>RetroSpace - Iniciar Sesion </title>
 </head>
 <body>
-    <header id="Encabezado">
-
-
+    <header class="encabezado">
+    <h1>RetroSpace</h1>
+    <p>Tu espacio, solo tu.</p>
     </header>
-    
+
+    <nav class="navegacion">
+        <a href="index.html">Inicio</a> 
+        <a href="registro.html">Crear cuenta</a> 
+    </nav>
+
+    <main>
+
+    <div id="contenedorIniciarSesion">
+    <h2>INICIAR SESION</h2>
+    <P>!Que bueno tenerte de vuelta¡</P>
+
+    <form id="FormularioInicioSesion" action=""method="post">
+
+        <label for="Usuario">Usuario o Correo Electronico: </label><br>
+        <input type="text" id="Usuario" name="Usuario" required><br>
+
+        <label for="Contraseña"> Contraseña: </label><br>
+        <input type="password" id="Contraseña" name="Contraseña" required><br>
+
+        <input type="submit" value="INICIAR SESION">
+
+    </form>
+
+    <p>¿No tienes cuenta? Registrate aqui <a href="registro.html">Crear Cuenta</a></p>
+    </div>
+    </main>
+    <footer class="pieDePagina">
+    <p>RetroSpace-2026-Proyecto Escolar</p>
+    </footer>
 </body>
 </html>

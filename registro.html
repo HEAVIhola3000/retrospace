@@ -6,28 +6,45 @@
     <title>RetroSpace - Crear cuenta</title>
 </head>
 <body>
-    <header>
+    <header class="encabezado">
         <h1>RetroSpace</h1>
-        <h2>¡Unete a la comunidad!</h2>
+       <p>Tu espacio, solo tu.</p>
     </header>
-    <nav>
-        <a href="index.html">Inicio</a> |
-        <a href="login.html">Iniciar sesión</a>
+
+    <nav class="navegacion">
+        <a href="index.html">Inicio</a> 
     </nav>
     
     <main>
-        <h2>Crear una cuenta</h2>
+        <div id="ContenedoraCreaCuenta">
+        <h2>Crear Cuenta</h2>
+        <p>Únete a nuestra comunidad digital</p>
 
-        <form action="" method="post">
+        <form id="FormularioCreaCuenta" method="post">
+
         <label for="NombreUsuario">Nombre de Usuario: </label><br>
-        <input type="text" id="NombreUsuario" name="NombreUsuario" required><br>
+        <input type="text" id="NombreUsuario" name="NvoNombreUsuario" minlength="3" required><br>
+
         <label for="Correo">Correo Electronico: </label><br>
-        <input type="email" id="Correo" name="Correo" required><br>
+        <input type="email" id="Correo" name="NvoCorreo" required><br>
+
         <label for="Contraseña"> Contraseña: </label><br>
-        <input type="password" id="Contraseña" name="Contraseña" required><br>
+        <input type="password" id="Contraseña" name="NvaContraseña" minlength="8" required><br>
+
+        <label for="ConfirmarContraseña">Confirmar Contraseña: </label><br>
+        <input type="password" id="ConfirmarContraseña" name="ConfirmarContraseña" minlength="8" required><br>
+
         <input type="submit" value="CREAR CUENTA">
+
         </form>
 
+        <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+        </div>
     </main>
+
+    <footer class="pieDePagina">
+    <p>RetroSpace-2026-Proyecto Escolar</p>
+    </footer>
+
 </body>
 </html>
