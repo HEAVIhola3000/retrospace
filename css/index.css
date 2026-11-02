@@ -1,5 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+header{
+    background-color: #090714;
+    padding: 30px 15px;
+}
+
+header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 50px;
+    color: #00FF2F;
+    text-shadow: 0 0 10px #D600FF, 0 0 20px #D600FF, 0 0 30px #D600FF, 0 0 40px #D600FF;
+}
+
+header p{
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    color: #D600FF;
+    letter-spacing: 2px;
+}
+
 body {
-    background-color: black;
-    color: white;
+    background-color: #090714;
+    color: #00FF2F;
     text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; 
+  border-top: 2px solid #ff007f;  
+  border-bottom: 2px solid #ff007f; 
+  padding: 12px;
+  box-shadow: 0 0 25px rgba(255, 0, 127, 0.4); /* Resplandor de neón */
+}
+
+nav a{
+    color: #00FF2F;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 8px 16px;
+    transition: all 0.5s ease;
+}
+
+nav a:hover {
+    color: #D600FF;
+    text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF, 0 0 15px #D600FF;
+    background-color: rgba(255, 0, 127, 0.2);
+    transform: translateY(-3px);
+}
+
+main {
+    padding: 20px;
+    background-image: 
+        url('https://i.gifer.com/6KpW.gif'), 
+        url('https://i.gifer.com/6KpW.gif');
+    
+    background-position: 
+        left bottom 240px,   /* Izquierda, pegado abajo con un margen de 50px sobre el footer */
+        right bottom 240px;  /* Derecha, pegado abajo con un margen de 50px sobre el footer */
+        
+    background-size: 300px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+main h2, main h3{
+    font-family: 'Orbitron', sans-serif;
+    color: #00FF2F;
+    text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF, 0 0 15px #D600FF;
+}
+
+main p{
+    font-family: 'Share Tech Mono', monospace;
+    color: #D600FF;
+    line-height: 1.6;
+}
+
+main a{
+    color: #00FF2F;
+    text-decoration: none;
+    transition: all 0.5s ease;
+}
+
+main a:hover {
+    color: #D600FF;
+    text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF, 0 0 15px #D600FF;
+}
+
+footer {
+    background-color: #090714;
+    padding: 20px;
+    border-top: 2px solid #ff007f;  
+    box-shadow: 0 -5px 25px rgba(255, 0, 127, 0.4); /* Resplandor de neón */
+}
+footer p{
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 1px;
 }
