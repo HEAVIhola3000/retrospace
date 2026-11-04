@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+header{
+    background-color: #090714;
+    padding: 30px 15px;
+}
+
+header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 50px;
+    color: #00FF2F;
+    text-shadow: 0 0 10px #D600FF, 0 0 20px #D600FF, 0 0 30px #D600FF, 0 0 40px #D600FF;
+}
+
+header p{
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    color: #D600FF;
+    letter-spacing: 2px;
+}
+
+body {
+    background-color: #090714;
+    color: #00FF2F;
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; 
+  border-top: 2px solid #ff007f;  
+  border-bottom: 2px solid #ff007f; 
+  padding: 12px;
+  box-shadow: 0 0 25px rgba(255, 0, 127, 0.4); /* Resplandor de neón */
+}
+
+nav a{
+    color: #00FF2F;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 8px 16px;
+    transition: all 0.5s ease;
+}
+
+nav a:hover {
+    color: #D600FF;
+    text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF, 0 0 15px #D600FF;
+    background-color: rgba(255, 0, 127, 0.2);
+    transform: translateY(-3px);
+}
+
+main h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00FF2F;
+    text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF, 0 0 15px #D600FF;
+}
+
+main p{
+    font-family: 'Share Tech Mono', monospace;
+    color: #D600FF;
+    line-height: 1.6;
+}
+
+main a{
+    color: #00FF2F;
+    text-decoration: none;
+    transition: all 0.5s ease;
+}
+
+main a:hover {
+    color: #D600FF;
+    text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF, 0 0 15px #D600FF;
+}
+
+#contenedorIniciarSesion {
+    max-width: 420px;
+    margin: 40px auto;
+    padding: 30px;
+    border: 2px solid #ff007f;            
+    border-radius: 8px;
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2); /* Resplandor exterior e interior */
+    text-align: left; 
+}
+
+#contenedorIniciarSesion h2 {
+    text-align: center;
+}
+
+
+#contenedorIniciarSesion p {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+#FormularioInicioSesion label {
+    font-family: 'Share Tech Mono', monospace;
+    color: #00FF2F;
+    font-size: 16px;
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+#FormularioInicioSesion input[type="text"], #FormularioInicioSesion input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #05040a;
+    border: 1px solid #00FF2F;
+    color: #00FF2F;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 16px;
+    border-radius: 4px;
+    box-sizing: border-box; /* Evita que el padding rompa el ancho */
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#FormularioInicioSesion input[type="text"]:focus, #FormularioInicioSesion input[type="password"]:focus {
+    border-color: #D600FF;
+    box-shadow: 0 0 10px #D600FF;
+}
+
+#FormularioInicioSesion input[type="submit"] {
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px;
+    background-color: #ff007f;
+    color: #ffffff;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
+    transition: all 0.3s ease;
+}
+
+#FormularioInicioSesion input[type="submit"]:hover {
+    background-color: #00FF2F;
+    color: #090714;
+    box-shadow: 0 0 20px #00FF2F, 0 0 35px #00FF2F;
+    transform: translateY(-2px);
+}
+
+
+footer {
+    background-color: #090714;
+    padding: 20px;
+    border-top: 2px solid #ff007f;  
+    box-shadow: 0 -5px 25px rgba(255, 0, 127, 0.4); 
+    text-align: center;
+}
+footer p{
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 1px;
+}
