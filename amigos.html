@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroSpace - Amigos</title>
+</head>
+<body>
+    <header>
+        <h1>RetroSpace</h1>
+        <p>Tu espacio, solo tu.</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Inicio</a> 
+        <a href="perfil.html">Mi perfil</a> 
+        <a href="login.html">Cerrar sesiónEjem</a>
+    </nav>
+
+    <main>
+        <section id="SeccionBuscarAmigos">
+            <div id="ContendorBuscarAmigos">
+                <h2>BUSCAR AMIGOS</h2>
+                <P>Encuentra a tus amigos en RetroSpace</P>
+
+                <form id="FormularioBusqueda">
+                 <input id="BuscarAmigo" type="text" name="BuscarAmigo" placeholder="Busca un Usuario..." required>
+
+                 <button type="submit">Buscar</button>
+                </form>
+
+            </div>
+
+        </section>
+
+        <section id="SeccionSolicitudes">
+            <div id="ContenedorSolicitudes">
+                <h2>SOLICITUDES DE AMISTAD</h2>
+                <p>Tienes 2 solicitudes pendientesejem</p>
+
+                <div class="solicitud">
+
+                  <img src="https://placehold.co/80x80" alt="Foto de usuario">
+
+                  <p>UsuarioEjemplo1</p>
+                  <button type="button">Aceptar</button>
+                  <button type="button">Rechazar</button>
+                </div>
+
+                <div class="solicitud">
+
+                  <img src="https://placehold.co/80x80" alt="Foto de usuario">
+
+                  <p>UsuarioEjemplo1</p>
+                  <button type="button">Aceptar</button>
+                  <button type="button">Rechazar</button>
+                </div>
+                
+            </div>
+        </section>
+
+        <section id="SeccionMisAmigos">
+            <div id="ContenedorMisAmigos">
+
+                <h2>MIS AMIGOS</h2>
+                <p>Tu lista de amigos en RetroSpace</p>
+
+                <div class="Amigo">
+
+                  <img src="https://placehold.co/80x80" alt="Foto de usuario">
+
+                  <p>AmigoEjem1</p>
+                  <button type="button">Ver perfil</button>
+
+                </div>
+
+                <div class="Amigo">
+                    <img src="https://placehold.co/80x80" alt="Foto de usuario">
+
+                    <p>AmigoEjem2</p>
+                    <button type="button">Ver perfil</button>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+</body>
+</html>
+<!--la página tendrá estos comportamientos cuando conectemos el backend:
+- Buscar amigos mostrará usuarios registrados.
+- Aceptar cambiará el estado de una solicitud.
+- Rechazar eliminará o marcará como rechazada la solicitud.
+- Ver perfil abrirá el perfil del amigo seleccionado.-->
