@@ -35,7 +35,7 @@ nav {
   border-top: 2px solid #ff007f;  
   border-bottom: 2px solid #ff007f; 
   padding: 12px;
-  box-shadow: 0 0 25px rgba(255, 0, 127, 0.4); /* Resplandor de neón */
+  box-shadow: 0 0 25px rgba(255, 0, 127, 0.4); 
 }
 
 nav a{
