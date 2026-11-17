@@ -24,15 +24,18 @@
 
         <section id="Barralateral">
             <div id="ImagenPerfil">
-             <img src="https://placehold.co/150x150" alt="Foto de perfil">
+             <img id="FotoPerfil" src="https://placehold.co/150x150" alt="Foto de perfil">
+             <button type="button" id="CambiarFoto"> Cambiar Foto</button>
+
+             <input type="file" id="ArchivoFoto" accept="image/*" hidden>
             </div>
 
             <div id="InfoPersonal">
-                 <p>Mi Usuario</p>
+                 <p id="NombreUsuario">Mi Usuario</p>
                  <button id="BotonUsuario">Editar mi Usuario</button>
-                 <p>Artista Favorito</p>
+                 <p id="ArtistaFavorito">Artista Favorito</p>
                  <button id="BotonArtista">Editar mi Artista</button>
-                 <p>Cancion Favorita</p>
+                 <p id="CancionFavorita">Cancion Favorita</p>
                  <button id="BotonCancion">Editar mi Cancion</button>
             </div>
 
@@ -53,6 +56,8 @@
             <h2>Mi Muro</h2>
 
             <form id="FormularioPublicacion" action="">
+                <input type="text" id="TituloPublicacion" name="titulo" placeholder="Escribe el titulo..." required>
+
                 <textarea name="publicacion" id="TextoPublicacion" placeholder="¿Qué estas pensando?" required></textarea>
 
                 <button type="submit">Publicar</button>
@@ -87,6 +92,6 @@
     <footer>
         <p>RetroSpace - Mi espacio personal</p>
     </footer>
-
+<script src="js/perfil.js"></script>
 </body>
 </html>
