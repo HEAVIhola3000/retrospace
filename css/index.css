@@ -87,6 +87,9 @@ main a:hover {
     text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF, 0 0 15px #D600FF;
 }
 
+#espacioBlanco{
+    padding: 80px;
+}
 footer {
     background-color: #090714;
     padding: 20px;
