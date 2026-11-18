@@ -147,3 +147,8 @@ ArchivoFoto.addEventListener("change", function(){
     FotoPerfil.src = URL.createObjectURL(archivo);
 });
 
+//ver amigos
+BotonVerAmigos.addEventListener("click", function(){
+    window.location.href= "amigos.html";
+})
+

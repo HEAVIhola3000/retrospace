@@ -19,7 +19,7 @@
 
     <main>
         <section id="SeccionBuscarAmigos">
-            <div id="ContendorBuscarAmigos">
+            <div id="ContenedorBuscarAmigos">
                 <h2>BUSCAR AMIGOS</h2>
                 <P>Encuentra a tus amigos en RetroSpace</P>
 
@@ -29,6 +29,10 @@
                  <button type="submit">Buscar</button>
                 </form>
 
+                <div id="ResultadosBusqueda">
+
+                </div>
+
             </div>
 
         </section>
@@ -36,24 +40,27 @@
         <section id="SeccionSolicitudes">
             <div id="ContenedorSolicitudes">
                 <h2>SOLICITUDES DE AMISTAD</h2>
-                <p>Tienes 2 solicitudes pendientesejem</p>
+                <p id="CantidadSolicitudes">Tienes 2 solicitudes pendientesejem</p>
 
                 <div class="solicitud">
 
                   <img src="https://placehold.co/80x80" alt="Foto de usuario">
 
                   <p>UsuarioEjemplo1</p>
-                  <button type="button">Aceptar</button>
-                  <button type="button">Rechazar</button>
+
+                  <button type="button" class="AceptarSolicitud">Aceptar</button>
+
+                  <button type="button" class="RechazarSolicitud">Rechazar</button>
                 </div>
 
                 <div class="solicitud">
 
                   <img src="https://placehold.co/80x80" alt="Foto de usuario">
 
-                  <p>UsuarioEjemplo1</p>
-                  <button type="button">Aceptar</button>
-                  <button type="button">Rechazar</button>
+                  <p>UsuarioEjemplo2</p>
+                  <button type="button" class="AceptarSolicitud">Aceptar</button>
+
+                  <button type="button" class="RechazarSolicitud">Rechazar</button>
                 </div>
 
             </div>
@@ -88,6 +95,7 @@
     <footer>
         <p>RetroSpace - Mi espacio personal</p>
     </footer>
+    <script src="js/amigos.js" defer></script>
 </body>
 </html>
 <!--la página tendrá estos comportamientos cuando conectemos el backend:
