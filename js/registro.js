@@ -30,3 +30,23 @@ formulario.addEventListener("submit",function(event){
         return false;
     }
 });
+lockBtn=document.querySelectorAll('.lock');
+lockBtn.forEach(Lock=> {
+    Lock.addEventListener('click',()=>{
+        event.preventDefault();
+        Lock.classList.toggle('lock');
+        if(!Lock.classList.contains('lock')){
+            lockBtn.forEach(Lockk =>{
+                Lockk.style.opacity='0.5';
+            })
+            inputPassword.type='text';
+            confirmPasswword.type='text';        
+        }else{
+            lockBtn.forEach(Lockk =>{
+                Lockk.style.opacity='1';
+            })
+            inputPassword.type='password';
+            confirmPasswword.type='password';
+        }
+    })
+});

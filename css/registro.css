@@ -150,7 +150,7 @@ main a:hover {
     transform: translateY(-2px);
 }
 
-#mostrarContraseña {
+.lock {
      margin-top: 8px;
     padding: 6px 12px;
     background-color: #05040a;             
@@ -164,30 +164,25 @@ main a:hover {
     transition: all 0.3s ease;
 }
 
-#mostrarContraseña:hover {
+.lock:hover {
     background-color: #D600FF;                 
     color: #05040a;                            
     box-shadow: 0 0 10px #D600FF, 0 0 20px #D600FF; 
 }
-
-#mostrarConfirmarContraseña {
-    margin-top: 8px;
+.input{
+    width: 30px;
+     margin-top: 8px;
     padding: 6px 12px;
-    background-color: #05040a;               
-    color: #D600FF;                           
+    background-color: #05040a;             
+    color: #D600FF;                          
     font-family: 'Share Tech Mono', monospace;
     font-size: 13px;
     letter-spacing: 1px;
-    border: 1px solid #D600FF;               
+    border: 1px solid #D600FF;                
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
-}
 
-#mostrarConfirmarContraseña:hover {
-    background-color: #D600FF;                
-    color: #05040a;                           
-    box-shadow: 0 0 10px #D600FF, 0 0 20px #D600FF;
 }
 
 footer {
