@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+header{
+    background-color: #090714;
+    padding: 30px 15px;
+}
+
+header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 50px;
+    color: #00FF2F;
+    text-shadow: 0 0 10px #D600FF, 0 0 20px #D600FF, 0 0 30px #D600FF, 0 0 40px #D600FF;
+}
+
+header p{
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    color: #D600FF;
+    letter-spacing: 2px;
+}
+
+body {
+    background-color: #090714;
+    color: #00FF2F;
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; 
+  border-top: 2px solid #ff007f;  
+  border-bottom: 2px solid #ff007f; 
+  padding: 12px;
+  box-shadow: 0 0 25px rgba(255, 0, 127, 0.4); /* Resplandor de neón */
+}
+
+nav a{
+    color: #00FF2F;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 8px 16px;
+    transition: all 0.5s ease;
+}
+
+nav a:hover {
+    color: #D600FF;
+    text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF, 0 0 15px #D600FF;
+    background-color: rgba(255, 0, 127, 0.2);
+    transform: translateY(-3px);
+}
+
+main {
+    display: grid;
+    /* Definimos dos columnas arriba (perfil y amigos) y una sola columna grande abajo para el muro */
+    grid-template-columns: 320px 1fr; 
+    grid-template-areas: "lateral amigos" "muro muro";
+    gap: 30px;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+    text-align: left;
+}
+
+
+#Barralateral {
+    grid-area: lateral; /* Se coloca arriba a la izquierda */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Tarjeta contenedora de la foto de perfil */
+#ImagenPerfil {
+    background-color: rgba(9, 7, 20, 0.85);
+    border: 2px solid #ff007f;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
+}
+
+/* Estilo para la imagen de perfil (dándole toque de monitor retro) */
+#FotoPerfil {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 50%; /* La hace circular */
+    border: 2px solid #00FF2F;
+    box-shadow: 0 0 10px #00FF2F;
+    margin-bottom: 15px;
+}
+
+/* Tarjeta contenedora de la información personal (Usuario, Artista, Canción) */
+#InfoPersonal {
+    background-color: rgba(9, 7, 20, 0.85);
+    border: 2px solid #ff007f;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
+}
+
+#InfoPersonal p {
+    font-size: 14px;
+    color: #D600FF;
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+
+
+#Amigos {
+    grid-area: amigos; /* Se coloca arriba a la derecha (junto al perfil) */
+    margin-top: 0;     /* Quitamos el margen anterior para que alineen bien arriba */
+    background-color: rgba(9, 7, 20, 0.85);
+    border: 2px solid #ff007f;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
+    text-align: left;
+}
+
+
+#ContenedorAmigos h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    color: #00FF2F;
+    text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+
+#ContenedorAmigos p {
+    color: #D600FF;
+    font-size: 15px;
+    margin: 8px 0;
+    padding: 6px 10px;
+    background-color: #05040a;
+    border-left: 2px solid #00FF2F; /* Un pequeño detalle de terminal a la izquierda */
+}
+
+#Muro {
+    grid-area: muro; /* Se extiende abajo abarcando todo el ancho de las dos columnas */
+    background-color: rgba(9, 7, 20, 0.85);
+    border: 2px solid #ff007f;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
+    text-align: left;
+}
+
+/* Título principal del Muro */
+#Muro h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    color: #00FF2F;
+    text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Formulario para crear publicaciones */
+#FormularioPublicacion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #ff007f; /* Línea que divide */
+}
+
+/* Campos de texto en crear publicacion */
+#FormularioPublicacion input[type="text"], #FormularioPublicacion textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: #05040a;
+    border: 1px solid #00FF2F;
+    color: #00FF2F;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 15px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* efecto de resplandor al seleccionar los campos de texto */
+#FormularioPublicacion input[type="text"]:focus, #FormularioPublicacion textarea:focus {
+    border-color: #D600FF;
+    box-shadow: 0 0 10px #D600FF;
+}
+
+/* Tarjeta individual de cada publicación */
+article.publicacion {
+    background-color: #05040a;
+    border: 1px solid #00FF2F;
+    border-radius: 6px;
+    padding: 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(0, 255, 47, 0.15);
+}
+
+/* titulo de la publicacion*/
+article.publicacion h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    color: #00FF2F;
+    margin-bottom: 8px;
+}
+ /* parrafo de la publicacion */
+article.publicacion  p {
+    color: #ffffff;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+/* Sección de comentarios dentro de la publicación */
+.listaComentarios {
+    background-color: rgba(9, 7, 20, 0.6);
+    border-left: 2px solid #D600FF;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.listaComentarios p {
+    color: #D600FF;
+    margin: 4px 0;
+}
+
+.listaComentarios strong {
+    color: #00FF2F;
+}
+
+/* Formulario pequeño para escribir comentarios */
+article.publicacion form {
+    display: flex;
+    gap: 10px;
+}
+
+
+article.publicacion input[id="EscribirComentario"] {
+    flex: 1;
+    padding: 8px 12px;
+    background-color: #090714;
+    border: 1px solid #00FF2F;
+    color: #00FF2F;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    border-radius: 4px;
+    outline: none;
+}
+
+/*diseño de todos los botones*/
+#Barralateral button, #ContenedorAmigos button, #FormularioPublicacion button[type="submit"], article.publicacion button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff007f;                   
+    color: #ffffff;                              
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.5); 
+    transition: all 0.3s ease;                   
+}
+
+/* Efecto hover de los botones */
+#Barralateral button:hover, #ContenedorAmigos button:hover, #FormularioPublicacion button[type="submit"]:hover, article.publicacion button[type="submit"]:hover {
+    background-color: #00FF2F;                  
+    color: #090714;                             
+    box-shadow: 0 0 15px #00FF2F, 0 0 25px #00FF2F;
+    transform: translateY(-2px);                 
+}
+
+
+footer {
+    background-color: #090714;
+    padding: 20px;
+    border-top: 2px solid #ff007f;  
+    box-shadow: 0 -5px 25px rgba(255, 0, 127, 0.4); /* Resplandor de neón */
+}
+footer p{
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 1px;
+}
