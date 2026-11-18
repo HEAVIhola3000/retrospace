@@ -100,6 +100,10 @@ Solicitudes.forEach(function(solicitud){
         const BotonVerPerfil = document.createElement("button");
         BotonVerPerfil.type = "button";
         BotonVerPerfil.textContent = "Ver perfil";
+        BotonVerPerfil.addEventListener("click", function(){
+            const nombre = nombreAmigo.textContent;
+            window.location.href = "perfil-amigo.html?usuario="+ encodeURIComponent(nombre);
+        });
 //unir todos los elementis
         nuevoAmigo.appendChild(foto);
         nuevoAmigo.appendChild(nombreAmigo);

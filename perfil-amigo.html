@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>perfil</title>
+</head>
+<body>
+     
+    <header class="encabezado">
+        <h1>RetroSpace</h1>
+        <p>Tu espacio. Solo tu.</p>
+    </header>
+
+    <nav class="navegacion">
+        <a href="index.html">Inicio</a> 
+        <a href="perfil.html">Mi perfil</a> 
+        <a href="amigos.html">Amigos</a>
+        <a href="login.html">Cerrar sesiónEjem</a>
+    </nav>
+
+    <main>
+
+        <section id="Barralateral">
+            <div id="ImagenPerfil">
+             <img id="FotoPerfil" src="https://placehold.co/150x150" alt="Foto de perfil">
+
+             <input type="file" id="ArchivoFoto" accept="image/*" hidden>
+            </div>
+
+            <div id="InfoPersonal">
+                 <p id="NombreUsuario">USUARIO EJEMPLO</p>
+                 <p id="ArtistaFavorito">Artista Favorito</p>
+                 <p id="CancionFavorita">Cancion Favorita</p>
+            </div>
+
+        </section>
+
+
+            <article class="publicacion">
+
+             <h3>Mi primera publicacióne.jem</h3>
+
+             <p>¡Hola! Esta es mi primera publicación en RetroSpace.ejem</p>
+
+             <div class="listaComentarios">
+             <p>Comentarios</p>
+             <p><strong>Amigo 1ejem:</strong> ¡Qué buena publicación!ejem</p>
+             <p><strong>Amigo 2ejem:</strong> Bienvenidooo 💜ejem</p>
+             </div>
+
+             <form>
+             <input id="EscribirComentario" type="text" name="comentario" placeholder="Escribe un comentario..." required>
+
+             <button type="submit">Enviar</button>
+
+             </form>
+
+            </article>
+            
+        </section>
+
+    </main>
+
+    <footer>
+        <p>RetroSpace - Mi espacio personal</p>
+    </footer>
+
+    <script src="js/perfil-amigo.js" defer></script>
+</body>
+</html>
