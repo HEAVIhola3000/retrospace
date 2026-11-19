@@ -71,6 +71,7 @@ main h2, main h3{
 }
 
 main p{
+    font-size: 20px;
     font-family: 'Share Tech Mono', monospace;
     color: #D600FF;
     line-height: 1.6;

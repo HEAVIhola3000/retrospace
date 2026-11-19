@@ -104,7 +104,7 @@ main {
 }
 
 #InfoPersonal p {
-    font-size: 14px;
+    font-size: 20px;
     color: #D600FF;
     margin-top: 12px;
     margin-bottom: 4px;
@@ -125,7 +125,7 @@ main {
 
 #ContenedorAmigos h2 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 18px;
+    font-size: 22px;
     color: #00FF2F;
     text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF;
     margin-bottom: 15px;
@@ -135,7 +135,7 @@ main {
 
 #ContenedorAmigos p {
     color: #D600FF;
-    font-size: 15px;
+    font-size: 20px;
     margin: 8px 0;
     padding: 6px 10px;
     background-color: #05040a;

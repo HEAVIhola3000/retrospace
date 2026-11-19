@@ -96,7 +96,7 @@ main {
 }
 
 #InfoPersonal p {
-    font-size: 14px;
+    font-size: 20px;
     color: #D600FF;
     margin: 10px 0;
 }
@@ -121,7 +121,7 @@ article.publicacion h3 {
 
 article.publicacion > p {
     color: #ffffff;
-    font-size: 15px;
+    font-size: 18px;
     margin-bottom: 18px;
 }
 
@@ -137,6 +137,7 @@ article.publicacion > p {
 .listaComentarios p {
     color: #D600FF;
     margin: 6px 0;
+    font-size: 17px;
 }
 
 .listaComentarios strong {

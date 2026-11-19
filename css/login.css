@@ -61,6 +61,7 @@ main h2 {
 
 main p{
     font-family: 'Share Tech Mono', monospace;
+    font-size: 20px;
     color: #D600FF;
     line-height: 1.6;
 }
@@ -92,9 +93,9 @@ main a:hover {
 
 
 #contenedorIniciarSesion p {
+    font-size: 20px;
     text-align: center;
     margin-top: 20px;
-    font-size: 14px;
 }
 
 #FormularioInicioSesion label {
