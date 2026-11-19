@@ -277,6 +277,66 @@ article.publicacion input[id="EscribirComentario"] {
     box-shadow: 0 0 15px #00FF2F, 0 0 25px #00FF2F;
     transform: translateY(-2px);                 
 }
+#insertar{
+    width: 30px;
+     margin-top: 8px;
+    padding: 6px 12px;
+    background-color: #05040a;             
+    color: #D600FF;                          
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 1px;
+    border: 1px solid #D600FF;                
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+#insertar:hover{
+    background-color: #D600FF;                 
+    color: #05040a;                            
+    box-shadow: 0 0 10px #D600FF, 0 0 20px #D600FF; 
+}
+#texto{
+    background-color: rgba(9, 7, 20, 0.85);
+    border: 2px solid #00ff2f;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
+    font-size: 14px;
+    color: #D600FF;
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+#bonus{
+    background-color: rgba(9, 7, 20, 0.85);
+    border: 2px solid #ff007f;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
+}
+#guardar{
+    width: 100%;
+    padding: 10px;
+    background-color: #ff007f;                   
+    color: #ffffff;                              
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.5); 
+    transition: all 0.3s ease;                   
+}
+#guardar:hover{
+    background-color: #00FF2F;                  
+    color: #090714;                             
+    box-shadow: 0 0 15px #00FF2F, 0 0 25px #00FF2F;
+    transform: translateY(-2px);                 
+}
+.solidSnake{
+    display: none;
+}
 
 
 footer {

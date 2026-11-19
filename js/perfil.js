@@ -150,5 +150,17 @@ ArchivoFoto.addEventListener("change", function(){
 //ver amigos
 BotonVerAmigos.addEventListener("click", function(){
     window.location.href= "amigos.html";
-})
-
+});
+//funcion bonus
+const bn=document.querySelector("#bonus");
+isBtn=document.querySelector("#insertar");
+isBtn.addEventListener("click", () => {
+    bn.classList.toggle("solidSnake");
+    });
+function insertarBonus(){
+    const txt=document.querySelector("#texto").value;
+    const rs=document.querySelector("#resultado");
+    const nuevaEdicion=document.createElement("div");
+    nuevaEdicion.innerHTML=txt;
+    rs.appendChild(nuevaEdicion);
+}
