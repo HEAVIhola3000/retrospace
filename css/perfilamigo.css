@@ -35,7 +35,7 @@ nav {
   border-top: 2px solid #ff007f;  
   border-bottom: 2px solid #ff007f; 
   padding: 12px;
-  box-shadow: 0 0 25px rgba(255, 0, 127, 0.4); /* Resplandor de neón */
+  box-shadow: 0 0 25px rgba(255, 0, 127, 0.4);
 }
 
 nav a{
@@ -193,7 +193,7 @@ footer {
     background-color: #090714;
     padding: 20px;
     border-top: 2px solid #ff007f;  
-    box-shadow: 0 -5px 25px rgba(255, 0, 127, 0.4); /* Resplandor de neón */
+    box-shadow: 0 -5px 25px rgba(255, 0, 127, 0.4);
 }
 footer p{
     font-family: 'Share Tech Mono', monospace;
