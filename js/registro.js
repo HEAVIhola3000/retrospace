@@ -4,7 +4,7 @@ const inputName=document.querySelector("#NombreUsuario");
 const inputMail=document.querySelector("#Correo");
 const inputPassword=document.querySelector("#Contraseña");
 const confirmPasswword=document.querySelector("#ConfirmarContraseña");
-//verificacion de campos del formulario
+//verificacion de campos del formulario y redireccion temporal
 formulario.addEventListener("submit",function(event){
     let valid=true;
     if(inputName.value.trim()==="" || inputMail.value.trim()==="" || inputPassword.value.trim()===""){
@@ -24,12 +24,15 @@ formulario.addEventListener("submit",function(event){
     }
     if(valid){
         event.preventDefault();
-        alert("Gracias por registrarte");
+        alert("gracias por registrarte");
+        window.location.href="login.html";
         return true;
     } else{
         return false;
     }
+
 });
+//mostrar contraseña
 lockBtn=document.querySelectorAll('.lock');
 lockBtn.forEach(Lock=> {
     Lock.addEventListener('click',()=>{

@@ -121,3 +121,10 @@ Solicitudes.forEach(function(solicitud){
     actualizarContador();
  });
 });
+//pa ver el perfil de los amiwitos wawawawawawawau
+vBtn=document.querySelectorAll(".vPerfil");
+vBtn.forEach(vPerfil=>{
+    vPerfil.addEventListener("click",()=>{
+        window.location.href="perfil-amigo.html";
+    })
+});

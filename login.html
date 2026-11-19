@@ -26,14 +26,13 @@
     <form id="FormularioInicioSesion" action=""method="post">
 
         <label for="Usuario">Usuario o Correo Electronico: </label><br>
-        <input type="text" id="Usuario" name="Usuario" required><br>
+        <input type="text" id="Usuario" name="Usuario"><br>
 
         <label for="Contraseña"> Contraseña: </label><br>
-        <input type="password" id="Contraseña" name="Contraseña" required><br>
+        <input type="password" id="Contraseña" name="Contraseña"><br>
 
-        <button id="mostrarContraseña">Mostrar Contraseña</button>
-
-        <input type="submit" value="INICIAR SESION">
+        <img class="input lock" src="includes/PwEye.png" alt="Mostrar contraseña">
+        <input type="submit" value="INICIAR SESION" id="IniciarCuenta">
 
     </form>
 
@@ -44,4 +43,5 @@
     <p>RetroSpace-2026-Proyecto Escolar</p>
     </footer>
 </body>
+<script src="js/login.js"></script>
 </html>
