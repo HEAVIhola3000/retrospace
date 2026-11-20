@@ -23,7 +23,27 @@
     <h2>INICIAR SESION</h2>
     <P>!Que bueno tenerte de vuelta¡</P>
 
-    <form id="FormularioInicioSesion" action=""method="post">
+
+<form id="FormularioInicioSesion" action="PHP/login.php" method="POST">
+
+    <input
+        type="text"
+        name="Usuario"
+        placeholder="Usuario o correo electrónico"
+        required
+    >
+
+    <input
+        type="password"
+        name="Contraseña"
+        placeholder="Contraseña"
+        required
+    >
+
+    <button type="submit">Iniciar sesión</button>
+
+</form>
+
 
         <label for="Usuario">Usuario o Correo Electronico: </label><br>
         <input type="text" id="Usuario" name="Usuario"><br>
