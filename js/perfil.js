@@ -84,7 +84,7 @@ if (ArchivoFoto) {
     });
 }
 
-// Función bonus
+// Función bonus: guardar HTML/CSS personalizado en el perfil
 const bn = document.querySelector("#bonus");
 const isBtn = document.querySelector("#insertar");
 if (isBtn && bn) {
@@ -93,10 +93,26 @@ if (isBtn && bn) {
     });
 }
 
+const btnGuardarBonus = document.querySelector("#guardar");
+if (btnGuardarBonus) {
+    btnGuardarBonus.addEventListener("click", insertarBonus);
+}
+
 function insertarBonus() {
-    const txt = document.querySelector("#texto").value;
+    const txtArea = document.querySelector("#texto");
     const rs = document.querySelector("#resultado");
-    const nuevaEdicion = document.createElement("div");
-    nuevaEdicion.innerHTML = txt;
-    rs.appendChild(nuevaEdicion);
+    const formWidget = document.querySelector("#FormGuardarWidget");
+    const inputWidget = document.querySelector("#InputWidgetHtml");
+
+    if (!txtArea || !rs) return;
+
+    const contenido = txtArea.value.trim();
+    if (contenido === "") return;
+
+    rs.innerHTML = contenido;
+
+    if (formWidget && inputWidget) {
+        inputWidget.value = contenido;
+        formWidget.submit();
+    }
 }

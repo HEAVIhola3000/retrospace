@@ -145,6 +145,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 header("Location: perfil.php?ok=com");
                 exit;
             }
+        } elseif ($accion === "guardar_widget") {
+            $widgetHtml = trim($_POST["widget_html"] ?? "");
+
+            $stmtWidget = $conexion->prepare(
+                "INSERT INTO perfiles (id_usuario, biografia, cancion_favorita)
+                 VALUES (:id, :bio, '')
+                 ON DUPLICATE KEY UPDATE biografia = VALUES(biografia)"
+            );
+            $stmtWidget->execute([
+                ":id"  => $id_usuario,
+                ":bio" => $widgetHtml
+            ]);
+
+            header("Location: perfil.php?ok=widget");
+            exit;
         }
     } catch (PDOException $e) {
         if ($conexion->inTransaction()) {
@@ -159,7 +174,8 @@ if (isset($_GET["ok"])) {
         "perfil" => "Datos de perfil actualizados.",
         "foto"   => "Foto de perfil actualizada.",
         "pub"    => "Publicación creada en tu muro.",
-        "com"    => "Comentario guardado."
+        "com"    => "Comentario guardado.",
+        "widget" => "Personalización del perfil guardada."
     ];
     $mensaje = $mapOk[$_GET["ok"]] ?? "";
 }
@@ -367,10 +383,18 @@ if ($fotoLimpia === "" || $fotoLimpia === "default_150x150.png") {
 
         <button type="button" id="insertar">?</button><br>
         <div id="bonus" class="solidSnake">
-            <textarea id="texto" placeholder="Escribe tu texto aquí..."></textarea>
-            <button type="button" id="guardar" onclick="insertarBonus()">Guardar cambios</button>
+            <textarea id="texto" placeholder="Pega aquí tu HTML y <style>..."></textarea>
+            <button type="button" id="guardar">Guardar cambios</button>
         </div><br>
-        <div id="resultado"></div>
+
+        <form id="FormGuardarWidget" action="perfil.php" method="POST" style="display: none;">
+            <input type="hidden" name="accion" value="guardar_widget">
+            <textarea name="widget_html" id="InputWidgetHtml"></textarea>
+        </form>
+
+        <div id="resultado" style="grid-column: 1 / -1;">
+            <?php echo $perfil["biografia"] ?? ""; ?>
+        </div>
     </main>
 
     <footer>

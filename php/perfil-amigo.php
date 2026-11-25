@@ -63,7 +63,6 @@ try {
 
     $idAmigo = (int)$amigo["id_usuario"];
 
-    // Si entra a su propio ID/usuario, lo manda a su perfil
     if ($idAmigo === $idVisitante) {
         header("Location: perfil.php");
         exit;
@@ -246,10 +245,6 @@ $fotoSrc = resolverFoto($amigo["foto_perfil"] ?? "");
                 <p id="ArtistaFavorito"><?php echo e($amigo["artista_favorito"] ?: "Artista Favorito"); ?></p>
                 <p id="CancionFavorita"><?php echo e($amigo["cancion_favorita"] ?: "Cancion Favorita"); ?></p>
 
-                <?php if (!empty($amigo["biografia"])): ?>
-                    <p id="BiografiaUsuario"><?php echo nl2br(e($amigo["biografia"])); ?></p>
-                <?php endif; ?>
-
                 <!-- Estado y acción de amistad -->
                 <div style="margin-top: 12px;">
                     <?php if (!$relacion): ?>
@@ -338,6 +333,12 @@ $fotoSrc = resolverFoto($amigo["foto_perfil"] ?? "");
                 <?php endforeach; ?>
             <?php endif; ?>
         </section>
+
+        <?php if (!empty($amigo["biografia"])): ?>
+            <div id="resultado" style="grid-column: 1 / -1;">
+                <?php echo $amigo["biografia"]; ?>
+            </div>
+        <?php endif; ?>
     </main>
 
     <footer>
