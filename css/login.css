@@ -1,23 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-header{
+header {
+    position: relative;
     background-color: #090714;
-    padding: 30px 15px;
+    background-image: url('https://cdnb.artstation.com/p/assets/images/images/014/665/033/original/yargon-kerman-webp-net-gifmaker-39.gif?1544919451');
+    background-position: center;
+    background-size: cover; /*para que abarque todo el header*/
+    background-repeat: no-repeat;
+    padding: 45px 15px;
+    overflow: hidden;
 }
 
-header h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 50px;
-    color: #00FF2F;
-    text-shadow: 0 0 10px #D600FF, 0 0 20px #D600FF, 0 0 30px #D600FF, 0 0 40px #D600FF;
+/* Capa oscura sutil encima del GIF para que el texto neón resalte y no se pierda */
+header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(9, 7, 20, 0.55);
+    z-index: 1;
 }
 
-header p{
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-    color: #D600FF;
-    letter-spacing: 2px;
+header h1, header p {
+    position: relative;
+    z-index: 2;
 }
 
 body {
