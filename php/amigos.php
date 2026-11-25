@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($idOtro > 0 && $idOtro !== $id_usuario) {
         try {
             if ($accion === "enviar") {
-                // Evita duplicados en cualquier dirección
+                // Evita duplicados en cualquier direccion
                 $check = $conexion->prepare(
                     "SELECT id_amistad FROM amistades
                      WHERE (id_usuario_solicitud = :u1 AND id_usuario_aceptado = :u2)
@@ -93,7 +93,7 @@ if (isset($_GET["ok"])) {
 }
 
 try {
-    // 1. Solicitudes recibidas pendientes
+    //Solicitudes recibidas pendientes
     $stmtRecibidas = $conexion->prepare(
         "SELECT u.id_usuario, u.nombre_usuario, p.foto_perfil, p.artista_favorito
          FROM amistades a
@@ -106,7 +106,7 @@ try {
     $stmtRecibidas->execute([":id" => $id_usuario]);
     $solicitudesRecibidas = $stmtRecibidas->fetchAll(PDO::FETCH_ASSOC);
 
-    // 2. Amigos aceptados
+    //Amigos aceptados
     $stmtAmigos = $conexion->prepare(
         "SELECT u.id_usuario, u.nombre_usuario, p.foto_perfil, p.artista_favorito, p.cancion_favorita
          FROM amistades a
@@ -123,7 +123,7 @@ try {
     $stmtAmigos->execute([":id1" => $id_usuario, ":id2" => $id_usuario, ":id3" => $id_usuario]);
     $amigos = $stmtAmigos->fetchAll(PDO::FETCH_ASSOC);
 
-    // 3. Explorar / buscar otros usuarios
+    //Explorar / buscar otros usuarios
     if ($busqueda !== "") {
         $stmtExplorar = $conexion->prepare(
             "SELECT u.id_usuario, u.nombre_usuario, p.foto_perfil, p.artista_favorito,
@@ -198,7 +198,7 @@ try {
             <p style="color: #ff007f;"><?php echo e($error); ?></p>
         <?php endif; ?>
 
-        <!-- Buscador de usuarios -->
+        //buscador de usuarios
         <section id="BuscadorAmigos">
             <h2>Buscar personas en RetroSpace</h2>
             <form action="amigos.php" method="GET">
@@ -210,7 +210,7 @@ try {
             </form>
         </section>
 
-        <!-- Solicitudes recibidas -->
+        //solicitudes recibidas
         <section id="SolicitudesPendientes">
             <h2>Solicitudes recibidas (<?php echo count($solicitudesRecibidas); ?>)</h2>
             <?php if (empty($solicitudesRecibidas)): ?>
@@ -240,7 +240,7 @@ try {
             <?php endif; ?>
         </section>
 
-        <!-- Lista de amigos aceptados -->
+        //lista de amnigos recibidas
         <section id="ListaMisAmigos">
             <h2>Mis Amigos (<?php echo count($amigos); ?>)</h2>
             <?php if (empty($amigos)): ?>
@@ -266,7 +266,7 @@ try {
             <?php endif; ?>
         </section>
 
-        <!-- Explorar comunidad -->
+        //explorar usuarios
         <section id="ExplorarUsuarios">
             <h2><?php echo $busqueda !== "" ? "Resultados de búsqueda" : "Comunidad RetroSpace"; ?></h2>
             <?php if (empty($usuariosExplorar)): ?>

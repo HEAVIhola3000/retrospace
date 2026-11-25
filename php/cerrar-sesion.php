@@ -3,10 +3,10 @@
 
 session_start();
 
-// Vaciar todas las variables de sesión
+// Vaciar todas las variables de sesion
 $_SESSION = array();
 
-// Eliminar la cookie de sesión
+// Eliminar la cookie de sesion
 if (ini_get("session.use_cookies")) {
 
     $parametros = session_get_cookie_params();
@@ -22,7 +22,7 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// Destruir la sesión
+// Destruir la sesion
 session_destroy();
 
 // Regresar al inicio

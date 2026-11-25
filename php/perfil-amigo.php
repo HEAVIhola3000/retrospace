@@ -32,7 +32,7 @@ $baseQuery = ($idParam > 0)
     : "perfil-amigo.php?usuario=" . urlencode($usuarioParam);
 
 try {
-    // 1. Obtener datos del usuario visitado
+    //Obtener datos del usuario visitado
     if ($idParam > 0) {
         $sqlAmigo = "SELECT u.id_usuario, u.nombre_usuario,
                             p.biografia, p.frase_estado, p.foto_perfil,
@@ -68,7 +68,7 @@ try {
         exit;
     }
 
-    // 2. Procesar acciones POST (comentar o gestionar amistad)
+    //Procesar acciones POST, comentar, borrar comentario o gestionar amistad
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $accion = $_POST["accion"] ?? "comentar";
 
@@ -113,6 +113,22 @@ try {
 
             header("Location: " . $baseQuery . "&ok=eliminada");
             exit;
+        } elseif ($accion === "borrar_comentario") {
+            $idCom = (int)($_POST["id_comentario"] ?? 0);
+
+            if ($idCom > 0) {
+                $delCom = $conexion->prepare(
+                    "DELETE FROM comentarios
+                     WHERE id_comentario = :id_com AND id_usuario = :id_usr"
+                );
+                $delCom->execute([
+                    ":id_com" => $idCom,
+                    ":id_usr" => $idVisitante
+                ]);
+            }
+
+            header("Location: " . $baseQuery . "&ok=del_com");
+            exit;
         } elseif (isset($_POST["id_publicacion"], $_POST["comentario"])) {
             $idPub = (int)$_POST["id_publicacion"];
             $comentario = trim($_POST["comentario"]);
@@ -134,7 +150,7 @@ try {
         }
     }
 
-    // 3. Estado de amistad entre visitante y perfil visitado
+    //Estado de amistad entre usuarios
     $stmtAmistad = $conexion->prepare(
         "SELECT id_usuario_solicitud, id_usuario_aceptado, estado
          FROM amistades
@@ -145,7 +161,7 @@ try {
     $stmtAmistad->execute([":u1" => $idVisitante, ":u2" => $idAmigo]);
     $relacion = $stmtAmistad->fetch(PDO::FETCH_ASSOC);
 
-    // 4. Amigos aceptados del usuario visitado
+    //Amigos aceptados del perfil
     $stmtAmigosDeAmigo = $conexion->prepare(
         "SELECT u.id_usuario, u.nombre_usuario
          FROM amistades a
@@ -162,7 +178,7 @@ try {
     $stmtAmigosDeAmigo->execute([":id1" => $idAmigo, ":id2" => $idAmigo, ":id3" => $idAmigo]);
     $amigosDelPerfil = $stmtAmigosDeAmigo->fetchAll(PDO::FETCH_ASSOC);
 
-    // 5. Publicaciones del usuario visitado
+    //Publicaciones del usuario
     $stmtPubs = $conexion->prepare(
         "SELECT id_publicacion, titulo, contenido, fecha_creacion
          FROM publicaciones
@@ -172,14 +188,14 @@ try {
     $stmtPubs->execute([":id" => $idAmigo]);
     $publicaciones = $stmtPubs->fetchAll(PDO::FETCH_ASSOC);
 
-    // 6. Comentarios de esas publicaciones
+    //Comentarios de publicaciones
     $comentariosPorPub = [];
     if (!empty($publicaciones)) {
         $idsPubs = array_map(fn($p) => (int)$p["id_publicacion"], $publicaciones);
         $placeholders = implode(",", array_fill(0, count($idsPubs), "?"));
 
         $stmtComs = $conexion->prepare(
-            "SELECT c.id_publicacion, c.contenido, c.fecha_creacion, u.nombre_usuario
+            "SELECT c.id_comentario, c.id_publicacion, c.id_usuario, c.contenido, c.fecha_creacion, u.nombre_usuario
              FROM comentarios c
              INNER JOIN usuarios u ON c.id_usuario = u.id_usuario
              WHERE c.id_publicacion IN ($placeholders)
@@ -201,7 +217,8 @@ if (isset($_GET["ok"])) {
         "solicitud"  => "Solicitud de amistad enviada.",
         "aceptada"   => "Ahora son amigos.",
         "eliminada"  => "Relación de amistad actualizada.",
-        "comentario" => "Comentario publicado."
+        "comentario" => "Comentario publicado.",
+        "del_com"    => "Comentario eliminado."
     ];
     $mensaje = $mensajesOk[$_GET["ok"]] ?? "";
 }
@@ -313,9 +330,18 @@ $fotoSrc = resolverFoto($amigo["foto_perfil"] ?? "");
                             <p>Comentarios</p>
                             <?php if (!empty($comentariosPorPub[$idPubActual])): ?>
                                 <?php foreach ($comentariosPorPub[$idPubActual] as $com): ?>
+                                    <?php $idComActual = (int)$com["id_comentario"]; ?>
                                     <p>
                                         <strong><?php echo e($com["nombre_usuario"]); ?>:</strong>
                                         <?php echo e($com["contenido"]); ?>
+
+                                        <?php if ((int)$com["id_usuario"] === $idVisitante): ?>
+                                            <form action="<?php echo e($baseQuery); ?>" method="POST" style="display:inline; margin-left: 8px;" onsubmit="return confirm('¿Borrar este comentario?');">
+                                                <input type="hidden" name="accion" value="borrar_comentario">
+                                                <input type="hidden" name="id_comentario" value="<?php echo $idComActual; ?>">
+                                                <button type="submit">Borrar</button>
+                                            </form>
+                                        <?php endif; ?>
                                     </p>
                                 <?php endforeach; ?>
                             <?php else: ?>

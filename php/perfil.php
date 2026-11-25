@@ -127,6 +127,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 header("Location: perfil.php?ok=pub");
                 exit;
             }
+        } elseif ($accion === "borrar_publicacion") {
+            $idPub = (int)($_POST["id_publicacion"] ?? 0);
+
+            if ($idPub > 0) {
+                $conexion->beginTransaction();
+
+                $delComsPub = $conexion->prepare(
+                    "DELETE c FROM comentarios c
+                     INNER JOIN publicaciones p ON c.id_publicacion = p.id_publicacion
+                     WHERE c.id_publicacion = :id_pub AND p.id_usuario = :id_usr"
+                );
+                $delComsPub->execute([":id_pub" => $idPub, ":id_usr" => $id_usuario]);
+
+                $delPub = $conexion->prepare(
+                    "DELETE FROM publicaciones WHERE id_publicacion = :id_pub AND id_usuario = :id_usr"
+                );
+                $delPub->execute([":id_pub" => $idPub, ":id_usr" => $id_usuario]);
+
+                $conexion->commit();
+            }
+
+            header("Location: perfil.php?ok=del_pub");
+            exit;
         } elseif ($accion === "nuevo_comentario") {
             $idPub = (int)($_POST["id_publicacion"] ?? 0);
             $textoCom = trim($_POST["comentario"] ?? "");
@@ -145,6 +168,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 header("Location: perfil.php?ok=com");
                 exit;
             }
+        } elseif ($accion === "borrar_comentario") {
+            $idCom = (int)($_POST["id_comentario"] ?? 0);
+
+            if ($idCom > 0) {
+                $delCom = $conexion->prepare(
+                    "DELETE c FROM comentarios c
+                     INNER JOIN publicaciones p ON c.id_publicacion = p.id_publicacion
+                     WHERE c.id_comentario = :id_com
+                       AND (c.id_usuario = :id_usr1 OR p.id_usuario = :id_usr2)"
+                );
+                $delCom->execute([
+                    ":id_com"  => $idCom,
+                    ":id_usr1" => $id_usuario,
+                    ":id_usr2" => $id_usuario
+                ]);
+            }
+
+            header("Location: perfil.php?ok=del_com");
+            exit;
         } elseif ($accion === "guardar_widget") {
             $widgetHtml = trim($_POST["widget_html"] ?? "");
 
@@ -171,17 +213,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 if (isset($_GET["ok"])) {
     $mapOk = [
-        "perfil" => "Datos de perfil actualizados.",
-        "foto"   => "Foto de perfil actualizada.",
-        "pub"    => "Publicación creada en tu muro.",
-        "com"    => "Comentario guardado.",
-        "widget" => "Personalización del perfil guardada."
+        "perfil"  => "Datos de perfil actualizados.",
+        "foto"    => "Foto de perfil actualizada.",
+        "pub"     => "Publicación creada en tu muro.",
+        "com"     => "Comentario guardado.",
+        "widget"  => "Personalización del perfil guardada.",
+        "del_pub" => "Publicación eliminada.",
+        "del_com" => "Comentario eliminado."
     ];
     $mensaje = $mapOk[$_GET["ok"]] ?? "";
 }
 
 try {
-    // Datos del usuario y perfil
+    //Datos del usuario y perfil
     $consulta = $conexion->prepare(
         "SELECT u.id_usuario,
                 u.nombre_usuario,
@@ -228,14 +272,14 @@ try {
     $consultaPublicaciones->execute([":id" => $id_usuario]);
     $publicaciones = $consultaPublicaciones->fetchAll(PDO::FETCH_ASSOC);
 
-    // Comentarios de cada publicación
+    // Comentarios de cada publicacion
     $comentariosPorPub = [];
     if (!empty($publicaciones)) {
         $idsPubs = array_map(fn($p) => (int)$p["id_publicacion"], $publicaciones);
         $placeholders = implode(",", array_fill(0, count($idsPubs), "?"));
 
         $stmtComs = $conexion->prepare(
-            "SELECT c.id_publicacion, c.contenido, c.fecha_creacion, u.nombre_usuario
+            "SELECT c.id_comentario, c.id_publicacion, c.id_usuario, c.contenido, c.fecha_creacion, u.nombre_usuario
              FROM comentarios c
              INNER JOIN usuarios u ON c.id_usuario = u.id_usuario
              WHERE c.id_publicacion IN ($placeholders)
@@ -356,13 +400,28 @@ if ($fotoLimpia === "" || $fotoLimpia === "default_150x150.png") {
                         <h3><?php echo e($pub["titulo"]); ?></h3>
                         <p><?php echo nl2br(e($pub["contenido"])); ?></p>
 
+                        <form action="perfil.php" method="POST" style="display:inline;" onsubmit="return confirm('¿Borrar esta publicación?');">
+                            <input type="hidden" name="accion" value="borrar_publicacion">
+                            <input type="hidden" name="id_publicacion" value="<?php echo $idPubActual; ?>">
+                            <button type="submit">Borrar publicación</button>
+                        </form>
+
                         <div class="listaComentarios">
                             <p>Comentarios</p>
                             <?php if (!empty($comentariosPorPub[$idPubActual])): ?>
                                 <?php foreach ($comentariosPorPub[$idPubActual] as $com): ?>
+                                    <?php $idComActual = (int)$com["id_comentario"]; ?>
                                     <p>
                                         <strong><?php echo e($com["nombre_usuario"]); ?>:</strong>
                                         <?php echo e($com["contenido"]); ?>
+
+                                        <?php if ((int)$com["id_usuario"] === $id_usuario): ?>
+                                            <form action="perfil.php" method="POST" style="display:inline; margin-left: 8px;" onsubmit="return confirm('¿Borrar este comentario?');">
+                                                <input type="hidden" name="accion" value="borrar_comentario">
+                                                <input type="hidden" name="id_comentario" value="<?php echo $idComActual; ?>">
+                                                <button type="submit">Borrar</button>
+                                            </form>
+                                        <?php endif; ?>
                                     </p>
                                 <?php endforeach; ?>
                             <?php else: ?>

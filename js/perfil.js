@@ -84,7 +84,7 @@ if (ArchivoFoto) {
     });
 }
 
-// Función bonus: guardar HTML/CSS personalizado en el perfil
+//guardar HTML/CSS personalizado en el perfil
 const bn = document.querySelector("#bonus");
 const isBtn = document.querySelector("#insertar");
 if (isBtn && bn) {
