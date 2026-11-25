@@ -1,82 +1,60 @@
 <?php
 session_start();
-//hace la carga de la conexion
-require_once __DIR__ . "/includes/conexion.php";
-if(!isset($_SESSION["id_usuario"])){
-    header("location: login.html");
+require_once __DIR__ . "/conexiones.php";
+
+if (!isset($_SESSION["id_usuario"])) {
+    header("Location: ../login.html");
     exit;
 }
-//comprueba la sesion del usuario
+
 function e($valor) {
-    return htmlspecialchars(
-        (string)$valor,
-        ENT_QUOTES,
-        "UTF-8"
-    );
+    return htmlspecialchars((string)$valor, ENT_QUOTES, "UTF-8");
 }
 
-//toma el id del usuario
-$idvisitante = (int)$_SESSION["id_usuario"];
-//lee a usuario desde la url
-$usuarioParam = trim($_GET["usuario"] ?? "");
-//convierte el id del usuario a un entero, si nmo le asigna 0
-$idParam = isset($_GET["id"]) ? (int)$_GET["id"] : 0;
-//si no se mando ningun usuario ni id, detiene la script
-if ($usuarioParam === "" && $idParam === 0) {
-    die("No se especifico que amigo ver.");
-}
-//entra cuando el formulario se envia por POST
-if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_publicacion"], $_POST["comentario"])){
-    //convierte id_publicacion en un entro y limpia espacios
-    $idPub = (int)$_POST["id_publicacion"];
-    $comentario = trim($_POST["comentario"]);
-    //verifica que haya una publicacion valida y texto no vacio
-    //$pdo prepare protege contra inyeccion de sql
-    if ($idPub > 0 && $comentario !== "") {
-        $stmtInsertCom = $pdo->prepare(
-            "INSERT INTO comentarios (id_publicacion, id_usuario, contenido)
-             VALUES (:id_pub, :id_usr, :contenido)"
-        );
-        $stmtInsertCom->execute([
-            ":id_pub"    => $idPub,
-            ":id_usr"    => $idvisitante,
-            ":contenido" => $comentario
-        ]);
+function resolverFoto($foto, $default = "https://placehold.co/150x150") {
+    $limpia = trim((string)$foto, "'\" ");
+    if ($limpia === "" || $limpia === "default_150x150.png") {
+        return $default;
     }
-    //arma la url de regreso y codifica caracteres especiales
-    //header redirige y termina con exit
-    $redir = ($idParam > 0)
-        ? "perfil-amigo.php?id=$idParam"
-        : "perfil-amigo.php?usuario=" . urlencode($usuarioParam);
-    header("Location: " . $redir);
-    exit;
+    return "../" . ltrim($limpia, "/");
 }
 
-//consultas a la base de datos
+$idVisitante = (int)$_SESSION["id_usuario"];
+$usuarioParam = trim($_GET["usuario"] ?? "");
+$idParam = isset($_GET["id"]) ? (int)$_GET["id"] : 0;
+
+if ($usuarioParam === "" && $idParam === 0) {
+    die("No se especificó qué perfil visitar.");
+}
+
+$baseQuery = ($idParam > 0)
+    ? "perfil-amigo.php?id=" . $idParam
+    : "perfil-amigo.php?usuario=" . urlencode($usuarioParam);
+
 try {
-    //realiza busquedas, por id o nombre de usuario
-    //left join une los datos del usuario
-    //tiene el limite de dar como maximo 1 usuario
-    if($idParam > 0){
-        $sqlAmigo = "SELECT u.id_usuario, u.nombre_usuario, p.biografia, p.foto_perfil, p.artista_favorito, p.cancion_favorita
+    // 1. Obtener datos del usuario visitado
+    if ($idParam > 0) {
+        $sqlAmigo = "SELECT u.id_usuario, u.nombre_usuario,
+                            p.biografia, p.frase_estado, p.foto_perfil,
+                            p.artista_favorito, p.cancion_favorita
                      FROM usuarios u
                      LEFT JOIN perfiles p ON u.id_usuario = p.id_usuario
                      WHERE u.id_usuario = :id
                      LIMIT 1";
-        $stmtAmigo = $pdo->prepare($sqlAmigo);
+        $stmtAmigo = $conexion->prepare($sqlAmigo);
         $stmtAmigo->execute([":id" => $idParam]);
     } else {
-        $sqlAmigo = "SELECT u.id_usuario, u.nombre_usuario, p.biografia, p.foto_perfil, p.artista_favorito, p.cancion_favorita
+        $sqlAmigo = "SELECT u.id_usuario, u.nombre_usuario,
+                            p.biografia, p.frase_estado, p.foto_perfil,
+                            p.artista_favorito, p.cancion_favorita
                      FROM usuarios u
                      LEFT JOIN perfiles p ON u.id_usuario = p.id_usuario
                      WHERE u.nombre_usuario = :usuario
                      LIMIT 1";
-        $stmtAmigo = $pdo->prepare($sqlAmigo);
+        $stmtAmigo = $conexion->prepare($sqlAmigo);
         $stmtAmigo->execute([":usuario" => $usuarioParam]);
     }
 
-    //obtiene la fila como arreglo
-    //si no existre el usuario detiene la ejecucucion
     $amigo = $stmtAmigo->fetch(PDO::FETCH_ASSOC);
 
     if (!$amigo) {
@@ -84,75 +62,159 @@ try {
     }
 
     $idAmigo = (int)$amigo["id_usuario"];
-    //busca si existe un regtistro entre visitante y amigo
-    $sqlAmistad = "SELECT estado
-                   FROM amistades
-                   WHERE (id_usuario_solicitud = :u1 AND id_usuario_aceptado = :u2)
-                      OR (id_usuario_solicitud = :u2 AND id_usuario_aceptado = :u1)
-                   LIMIT 1";
-    $stmtAmistad = $pdo->prepare($sqlAmistad);
-    $stmtAmistad->execute([
-        ":u1" => $idvisitante,
-        ":u2" => $idAmigo
-    ]);
+
+    // Si entra a su propio ID/usuario, lo manda a su perfil
+    if ($idAmigo === $idVisitante) {
+        header("Location: perfil.php");
+        exit;
+    }
+
+    // 2. Procesar acciones POST (comentar o gestionar amistad)
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $accion = $_POST["accion"] ?? "comentar";
+
+        if ($accion === "enviar_solicitud") {
+            $check = $conexion->prepare(
+                "SELECT id_amistad FROM amistades
+                 WHERE (id_usuario_solicitud = :u1 AND id_usuario_aceptado = :u2)
+                    OR (id_usuario_solicitud = :u2 AND id_usuario_aceptado = :u1)
+                 LIMIT 1"
+            );
+            $check->execute([":u1" => $idVisitante, ":u2" => $idAmigo]);
+
+            if (!$check->fetch()) {
+                $ins = $conexion->prepare(
+                    "INSERT INTO amistades (id_usuario_solicitud, id_usuario_aceptado, estado)
+                     VALUES (:sol, :acp, 'pendiente')"
+                );
+                $ins->execute([":sol" => $idVisitante, ":acp" => $idAmigo]);
+            }
+
+            header("Location: " . $baseQuery . "&ok=solicitud");
+            exit;
+        } elseif ($accion === "aceptar_solicitud") {
+            $upd = $conexion->prepare(
+                "UPDATE amistades
+                 SET estado = 'aceptado'
+                 WHERE id_usuario_solicitud = :sol
+                   AND id_usuario_aceptado = :acp
+                   AND estado = 'pendiente'"
+            );
+            $upd->execute([":sol" => $idAmigo, ":acp" => $idVisitante]);
+
+            header("Location: " . $baseQuery . "&ok=aceptada");
+            exit;
+        } elseif ($accion === "eliminar_amistad") {
+            $del = $conexion->prepare(
+                "DELETE FROM amistades
+                 WHERE (id_usuario_solicitud = :u1 AND id_usuario_aceptado = :u2)
+                    OR (id_usuario_solicitud = :u2 AND id_usuario_aceptado = :u1)"
+            );
+            $del->execute([":u1" => $idVisitante, ":u2" => $idAmigo]);
+
+            header("Location: " . $baseQuery . "&ok=eliminada");
+            exit;
+        } elseif (isset($_POST["id_publicacion"], $_POST["comentario"])) {
+            $idPub = (int)$_POST["id_publicacion"];
+            $comentario = trim($_POST["comentario"]);
+
+            if ($idPub > 0 && $comentario !== "") {
+                $stmtInsertCom = $conexion->prepare(
+                    "INSERT INTO comentarios (id_publicacion, id_usuario, contenido)
+                     VALUES (:id_pub, :id_usr, :contenido)"
+                );
+                $stmtInsertCom->execute([
+                    ":id_pub"    => $idPub,
+                    ":id_usr"    => $idVisitante,
+                    ":contenido" => $comentario
+                ]);
+            }
+
+            header("Location: " . $baseQuery . "&ok=comentario");
+            exit;
+        }
+    }
+
+    // 3. Estado de amistad entre visitante y perfil visitado
+    $stmtAmistad = $conexion->prepare(
+        "SELECT id_usuario_solicitud, id_usuario_aceptado, estado
+         FROM amistades
+         WHERE (id_usuario_solicitud = :u1 AND id_usuario_aceptado = :u2)
+            OR (id_usuario_solicitud = :u2 AND id_usuario_aceptado = :u1)
+         LIMIT 1"
+    );
+    $stmtAmistad->execute([":u1" => $idVisitante, ":u2" => $idAmigo]);
     $relacion = $stmtAmistad->fetch(PDO::FETCH_ASSOC);
-    $estadoAmistad = $relacion ? $relacion["estado"] : "Sin_Relacion";
-    //consulta las publicaciones por el amigo
-    //fetchall devuelve un arreglo con todas las publicaciones
-    $stmtPubs = $pdo->prepare(
+
+    // 4. Amigos aceptados del usuario visitado
+    $stmtAmigosDeAmigo = $conexion->prepare(
+        "SELECT u.id_usuario, u.nombre_usuario
+         FROM amistades a
+         INNER JOIN usuarios u
+            ON u.id_usuario = CASE
+                WHEN a.id_usuario_solicitud = :id1 THEN a.id_usuario_aceptado
+                ELSE a.id_usuario_solicitud
+            END
+         WHERE (a.id_usuario_solicitud = :id2 OR a.id_usuario_aceptado = :id3)
+           AND a.estado = 'aceptado'
+         ORDER BY u.nombre_usuario ASC
+         LIMIT 10"
+    );
+    $stmtAmigosDeAmigo->execute([":id1" => $idAmigo, ":id2" => $idAmigo, ":id3" => $idAmigo]);
+    $amigosDelPerfil = $stmtAmigosDeAmigo->fetchAll(PDO::FETCH_ASSOC);
+
+    // 5. Publicaciones del usuario visitado
+    $stmtPubs = $conexion->prepare(
         "SELECT id_publicacion, titulo, contenido, fecha_creacion
          FROM publicaciones
-         WHERE id_usuario = :id_amigo
-         ORDER BY fecha_creacion DESC"
+         WHERE id_usuario = :id
+         ORDER BY fecha_creacion DESC, id_publicacion DESC"
     );
-    $stmtPubs->execute([":id_amigo" => $idAmigo]);
+    $stmtPubs->execute([":id" => $idAmigo]);
     $publicaciones = $stmtPubs->fetchAll(PDO::FETCH_ASSOC);
-    //inicializa comentariosporpub como arreglo vacio
-    //extrae las publicaciones y genera signos como publicaciones
-    //obtiene el nombre de usuario de quien escrbio cada comentario
+
+    // 6. Comentarios de esas publicaciones
     $comentariosPorPub = [];
-    if (count($publicaciones) > 0) {
+    if (!empty($publicaciones)) {
         $idsPubs = array_map(fn($p) => (int)$p["id_publicacion"], $publicaciones);
         $placeholders = implode(",", array_fill(0, count($idsPubs), "?"));
 
-        $sqlComs = "SELECT c.id_publicacion,
-                           c.contenido,
-                           c.fecha_creacion,
-                           u.nombre_usuario
-                    FROM comentarios c
-                    INNER JOIN usuarios u ON c.id_usuario = u.id_usuario
-                    WHERE c.id_publicacion IN ($placeholders)
-                    ORDER BY c.fecha_creacion ASC";
-        $stmtComs = $pdo->prepare($sqlComs);
+        $stmtComs = $conexion->prepare(
+            "SELECT c.id_publicacion, c.contenido, c.fecha_creacion, u.nombre_usuario
+             FROM comentarios c
+             INNER JOIN usuarios u ON c.id_usuario = u.id_usuario
+             WHERE c.id_publicacion IN ($placeholders)
+             ORDER BY c.fecha_creacion ASC, c.id_comentario ASC"
+        );
         $stmtComs->execute($idsPubs);
 
-        while ($com = $stmtComs->fetch(PDO::FETCH_ASSOC)) {
-            $comentariosPorPub[(int)$com["id_publicacion"]][] = $com;
+        while ($rowCom = $stmtComs->fetch(PDO::FETCH_ASSOC)) {
+            $comentariosPorPub[(int)$rowCom["id_publicacion"]][] = $rowCom;
         }
     }
-    //si ocurre un error en la base de datos o SQl atrapa la pdo y muestra el meensaje
-} catch (PDOException $ex) {
-    die("Error al cargar el perfil del amigo: " . $ex->getMessage());
+} catch (PDOException $e) {
+    die("Error al cargar el perfil: " . $e->getMessage());
 }
-//quita comillas o esapcios vacios de foto_perfil
-//si esta vacio o es el valor por defecto, usa imagen de remplazo
-$fotoLimpia = trim((string)($amigo["foto_perfil"] ?? ""), "'\" ");
-if ($fotoLimpia === "" || $fotoLimpia === "default_150x150.png") {
-    $fotoSrc = "https://placehold.co/150x150";
-} else {
-    $fotoSrc = $fotoLimpia;
+
+$mensaje = "";
+if (isset($_GET["ok"])) {
+    $mensajesOk = [
+        "solicitud"  => "Solicitud de amistad enviada.",
+        "aceptada"   => "Ahora son amigos.",
+        "eliminada"  => "Relación de amistad actualizada.",
+        "comentario" => "Comentario publicado."
+    ];
+    $mensaje = $mensajesOk[$_GET["ok"]] ?? "";
 }
-//define la url exacra del formulario
-$actionUrl = ($idParam > 0)
-    ? "perfil-amigo.php?id=" . $idParam
-    : "perfil-amigo.php?usuario=" . urlencode($amigo["nombre_usuario"]);
+
+$fotoSrc = resolverFoto($amigo["foto_perfil"] ?? "");
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/perfilamigo.css">
+    <link rel="stylesheet" href="../css/perfilamigo.css">
     <title>RetroSpace - Perfil de <?php echo e($amigo["nombre_usuario"]); ?></title>
 </head>
 <body>
@@ -163,33 +225,88 @@ $actionUrl = ($idParam > 0)
     </header>
 
     <nav class="navegacion">
-        <a href="index.html">Inicio</a>
-        <a href="PHP/perfil.php">Mi perfil</a>
-        <a href="amigos.html">Amigos</a>
-        <a href="PHP/cerrar-sesion.php">Cerrar sesion</a>
+        <a href="../index.html">Inicio</a>
+        <a href="perfil.php">Mi perfil</a>
+        <a href="amigos.php">Amigos</a>
+        <a href="cerrar-sesion.php">Cerrar sesión</a>
     </nav>
 
     <main>
+        <?php if ($mensaje !== ""): ?>
+            <p style="grid-column: 1 / -1; color: #00FF2F;"><?php echo e($mensaje); ?></p>
+        <?php endif; ?>
 
         <section id="Barralateral">
             <div id="ImagenPerfil">
-                <img id="FotoPerfil" src="<?php echo e($fotoSrc); ?>" alt="Foto de perfil de <?php echo e($amigo["nombre_usuario"]); ?>">
+                <img id="FotoPerfil" src="<?php echo e($fotoSrc); ?>" alt="Foto de <?php echo e($amigo["nombre_usuario"]); ?>">
             </div>
 
             <div id="InfoPersonal">
                 <p id="NombreUsuario"><?php echo e($amigo["nombre_usuario"]); ?></p>
-                <p id="EstadoAmistad">Estado: <?php echo e($estadoAmistad); ?></p>
                 <p id="ArtistaFavorito"><?php echo e($amigo["artista_favorito"] ?: "Artista Favorito"); ?></p>
                 <p id="CancionFavorita"><?php echo e($amigo["cancion_favorita"] ?: "Cancion Favorita"); ?></p>
+
                 <?php if (!empty($amigo["biografia"])): ?>
-                    <p id="Biografia"><?php echo nl2br(e($amigo["biografia"])); ?></p>
+                    <p id="BiografiaUsuario"><?php echo nl2br(e($amigo["biografia"])); ?></p>
                 <?php endif; ?>
+
+                <!-- Estado y acción de amistad -->
+                <div style="margin-top: 12px;">
+                    <?php if (!$relacion): ?>
+                        <form action="<?php echo e($baseQuery); ?>" method="POST">
+                            <input type="hidden" name="accion" value="enviar_solicitud">
+                            <button type="submit">Agregar amigo</button>
+                        </form>
+                    <?php elseif ($relacion["estado"] === "aceptado"): ?>
+                        <p><strong>✓ Ya son amigos</strong></p>
+                        <form action="<?php echo e($baseQuery); ?>" method="POST">
+                            <input type="hidden" name="accion" value="eliminar_amistad">
+                            <button type="submit">Eliminar amigo</button>
+                        </form>
+                    <?php elseif ((int)$relacion["id_usuario_solicitud"] === $idVisitante): ?>
+                        <p>Solicitud pendiente</p>
+                        <form action="<?php echo e($baseQuery); ?>" method="POST">
+                            <input type="hidden" name="accion" value="eliminar_amistad">
+                            <button type="submit">Cancelar solicitud</button>
+                        </form>
+                    <?php else: ?>
+                        <p>Te envió solicitud de amistad</p>
+                        <form action="<?php echo e($baseQuery); ?>" method="POST" style="display:inline;">
+                            <input type="hidden" name="accion" value="aceptar_solicitud">
+                            <button type="submit">Aceptar</button>
+                        </form>
+                        <form action="<?php echo e($baseQuery); ?>" method="POST" style="display:inline;">
+                            <input type="hidden" name="accion" value="eliminar_amistad">
+                            <button type="submit">Rechazar</button>
+                        </form>
+                    <?php endif; ?>
+                </div>
             </div>
         </section>
 
-        <section id="MuroAmigo">
-            <?php if (count($publicaciones) === 0): ?>
-                <p>Este usuario aun no tiene publicaciones.</p>
+        <section id="Amigos">
+            <div id="ContenedorAmigos">
+                <h2>AMIGOS DE <?php echo e(strtoupper($amigo["nombre_usuario"])); ?></h2>
+                <?php if (empty($amigosDelPerfil)): ?>
+                    <p>Aún no tiene amigos agregados.</p>
+                <?php else: ?>
+                    <?php foreach ($amigosDelPerfil as $amItem): ?>
+                        <p>
+                            <a href="perfil-amigo.php?id=<?php echo (int)$amItem["id_usuario"]; ?>">
+                                <?php echo e($amItem["nombre_usuario"]); ?>
+                            </a>
+                        </p>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <button type="button" id="BotonVerAmigos" onclick="window.location.href='amigos.php'">Ver todos los amigos</button>
+            </div>
+        </section>
+
+        <section id="Muro">
+            <h2>Muro de <?php echo e($amigo["nombre_usuario"]); ?></h2>
+
+            <?php if (empty($publicaciones)): ?>
+                <p>Este usuario aún no tiene publicaciones.</p>
             <?php else: ?>
                 <?php foreach ($publicaciones as $pub): ?>
                     <?php $idPubActual = (int)$pub["id_publicacion"]; ?>
@@ -207,11 +324,12 @@ $actionUrl = ($idParam > 0)
                                     </p>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <p>Sin comentarios todavia.</p>
+                                <p>Sin comentarios todavía.</p>
                             <?php endif; ?>
                         </div>
 
-                        <form action="<?php echo e($actionUrl); ?>" method="POST">
+                        <form action="<?php echo e($baseQuery); ?>" method="POST">
+                            <input type="hidden" name="accion" value="comentar">
                             <input type="hidden" name="id_publicacion" value="<?php echo $idPubActual; ?>">
                             <input type="text" name="comentario" placeholder="Escribe un comentario..." required>
                             <button type="submit">Enviar</button>
@@ -220,11 +338,10 @@ $actionUrl = ($idParam > 0)
                 <?php endforeach; ?>
             <?php endif; ?>
         </section>
-
     </main>
 
     <footer>
-        <p>RetroSpace - Mi espacio personal</p>
+        <p>RetroSpace - Perfil de comunidad</p>
     </footer>
 
 </body>

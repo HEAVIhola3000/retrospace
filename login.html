@@ -1,67 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/login.css">
-    <title>RetroSpace - Iniciar Sesion </title>
+    <title>RetroSpace - Iniciar Sesion</title>
 </head>
 <body>
     <header>
-    <h1>RetroSpace</h1>
-    <p>Tu espacio, solo tu.</p>
+        <h1>RetroSpace</h1>
+        <p>Tu espacio, solo tu.</p>
     </header>
 
     <nav>
-        <a href="index.html">Inicio</a> 
-        <a href="registro.html">Crear cuenta</a> 
+        <a href="index.html">Inicio</a>
+        <a href="registro.html">Crear cuenta</a>
     </nav>
 
     <main>
+        <div id="contenedorIniciarSesion">
+            <h2>INICIAR SESION</h2>
+            <p>!Que bueno tenerte de vuelta¡</p>
 
-    <div id="contenedorIniciarSesion">
-    <h2>INICIAR SESION</h2>
-    <P>!Que bueno tenerte de vuelta¡</P>
+            <form id="FormularioInicioSesion" action="php/login.php" method="POST">
+                <label for="Usuario">Usuario o Correo Electronico:</label><br>
+                <input type="text" id="Usuario" name="Usuario" placeholder="Usuario o correo electrónico" required><br>
 
+                <label for="Contraseña">Contraseña:</label><br>
+                <input type="password" id="Contraseña" name="Contraseña" placeholder="Contraseña" required><br>
 
-<form id="FormularioInicioSesion" action="PHP/login.php" method="POST">
+                <img class="input lock" src="includes/PwEye.png" alt="Mostrar contraseña">
+                <input type="submit" value="INICIAR SESION" id="IniciarCuenta">
+            </form>
 
-    <input
-        type="text"
-        name="Usuario"
-        placeholder="Usuario o correo electrónico"
-        required
-    >
-
-    <input
-        type="password"
-        name="Contraseña"
-        placeholder="Contraseña"
-        required
-    >
-
-    <button type="submit">Iniciar sesión</button>
-
-</form>
-
-
-        <label for="Usuario">Usuario o Correo Electronico: </label><br>
-        <input type="text" id="Usuario" name="Usuario"><br>
-
-        <label for="Contraseña"> Contraseña: </label><br>
-        <input type="password" id="Contraseña" name="Contraseña"><br>
-
-        <img class="input lock" src="includes/PwEye.png" alt="Mostrar contraseña">
-        <input type="submit" value="INICIAR SESION" id="IniciarCuenta">
-
-    </form>
-
-    <p>¿No tienes cuenta? Registrate aqui <a href="registro.html">Crear Cuenta</a></p>
-    </div>
+            <p>¿No tienes cuenta? Registrate aqui <a href="registro.html">Crear Cuenta</a></p>
+        </div>
     </main>
+
     <footer>
-    <p>RetroSpace-2026-Proyecto Escolar</p>
+        <p>RetroSpace-2026-Proyecto Escolar</p>
     </footer>
+
+    <script src="js/login.js"></script>
 </body>
-<script src="js/login.js"></script>
 </html>

@@ -1,166 +1,102 @@
-const BotonUsuario=document.querySelector("#BotonUsuario");
-const NombreUsuario=document.querySelector("#NombreUsuario");
-const ArtistaFavorito=document.querySelector("#ArtistaFavorito");
-const BotonArtista=document.querySelector("#BotonArtista");
-const CancionFavorita=document.querySelector("#CancionFavorita");
-const BotonCancion=document.querySelector("#BotonCancion");
-const BotonVerAmigos=document.querySelector("#BotonVerAmigos");
+const BotonUsuario = document.querySelector("#BotonUsuario");
+const NombreUsuario = document.querySelector("#NombreUsuario");
+const ArtistaFavorito = document.querySelector("#ArtistaFavorito");
+const BotonArtista = document.querySelector("#BotonArtista");
+const CancionFavorita = document.querySelector("#CancionFavorita");
+const BotonCancion = document.querySelector("#BotonCancion");
 
-BotonUsuario.addEventListener("click",function(){
-    let nuevoUsuario =prompt("Escribre tu nuevo nombre de usuario: ");
-    if (nuevoUsuario !==null && nuevoUsuario.trim() !== ""){
-        NombreUsuario.textContent=nuevoUsuario.trim();
+const formEditarPerfil = document.querySelector("#FormEditarPerfil");
+const inputNombreUsuario = document.querySelector("#InputNombreUsuario");
+const inputArtistaFavorito = document.querySelector("#InputArtistaFavorito");
+const inputCancionFavorita = document.querySelector("#InputCancionFavorita");
+
+function mostrarGuardarPerfil() {
+    if (formEditarPerfil) {
+        formEditarPerfil.style.display = "block";
     }
-});
+}
 
-BotonArtista.addEventListener("click",function(){
-    let nuevoArtista =prompt("Escribe tu nuevo Artista favorito: ");
-    if(nuevoArtista !==null && nuevoArtista.trim() !==""){
-       ArtistaFavorito.textContent=nuevoArtista.trim();
-    }
-});
-
-BotonCancion.addEventListener("click",function(){
-    let nuevaCancion =prompt("Escribe tu nueva cancion favorita: ");
-    if (nuevaCancion !==null && nuevaCancion.trim() !== ""){
-       CancionFavorita.textContent=nuevaCancion.trim();
-    }
-});
-
-//crear publicaciones
-const FormularioPublicacion=document.querySelector("#FormularioPublicacion");
-const TextoPublicacion = document.querySelector("#TextoPublicacion");
-const Muro = document.querySelector("#Muro");
-const TituloPublicacion = document.querySelector("#TituloPublicacion");
-
-FormularioPublicacion.addEventListener("submit", function(event){
-    const tituloTexto = TituloPublicacion.value.trim();
-
-    //para evitar q la pagina se recargue
-    event.preventDefault();
-
-    //se obtiene el texto esc5rito
-    const contenido= TextoPublicacion.value.trim();
-
-    //se comprueba que el texnbo no este vacio
-    if (contenido === ""|| tituloTexto ==="") {
-        return;
-    }
-
-    //crear elememento de la pucblicacion 
-    const nuevaPublicacion=document.createElement("article");
-    nuevaPublicacion.classList.add("publicacion");
-
-    //crear el titulo
-    const titulo=document.createElement("h3");
-    titulo.textContent = tituloTexto;
-
-    //crea el parrafo con el contenido
-    const texto = document.createElement("p");
-    texto.textContent = contenido;
-
-    //crear espacio para los fukin comentarios
-    const comentarios= document.createElement("div");
-    comentarios.classList.add("listaComentarios");
-
-    const tituloComentarios= document.createElement("p");
-    tituloComentarios.textContent = "Comentarios";
-
-    comentarios.appendChild(tituloComentarios);
-
-    //crear formulario para los comentariosuwu
-
-    const formularioComentario = document.createElement("form");
-
-    const inputComentario = document.createElement("input");
-    inputComentario.type = "text";
-    inputComentario.placeholder = "Escribe un comentario...";
-    inputComentario.required=true;
-
-    const botonComentario = document.createElement("button");
-    botonComentario.type = "submit";
-    botonComentario.textContent = "Enviar";
-
-    //agregar elementos al formmxdxdx
-    formularioComentario.appendChild(inputComentario);
-    formularioComentario.appendChild(botonComentario);
-
-    //detectar cuando se envia un comentariouwuw
-    formularioComentario.addEventListener("submit", function(event){
-        event.preventDefault();
-        const contenidoComentario = inputComentario.value.trim();
-
-        if(contenidoComentario ===""){
-            return;
+if (BotonUsuario) {
+    BotonUsuario.addEventListener("click", function () {
+        const nuevoUsuario = prompt("Escribe tu nuevo nombre de usuario:", NombreUsuario.textContent.trim());
+        if (nuevoUsuario !== null && nuevoUsuario.trim() !== "") {
+            const limpio = nuevoUsuario.trim();
+            NombreUsuario.textContent = limpio;
+            if (inputNombreUsuario) inputNombreUsuario.value = limpio;
+            mostrarGuardarPerfil();
         }
-        // pos crear el comentario 
-        const nuevoComentario = document.createElement("p");
-        nuevoComentario.textContent = "chavi: " + contenidoComentario;
-
-        //mostrar comentarioUWU en la publi
-        comentarios.appendChild(nuevoComentario);
-
-        //limpiar y resetear el formulario
-        formularioComentario.reset();
     });
-    //agregar el formulario
-            comentarios.appendChild(formularioComentario);
+}
 
+if (BotonArtista) {
+    BotonArtista.addEventListener("click", function () {
+        const nuevoArtista = prompt("Escribe tu nuevo Artista favorito:", ArtistaFavorito.textContent.trim());
+        if (nuevoArtista !== null && nuevoArtista.trim() !== "") {
+            const limpio = nuevoArtista.trim();
+            ArtistaFavorito.textContent = limpio;
+            if (inputArtistaFavorito) inputArtistaFavorito.value = limpio;
+            mostrarGuardarPerfil();
+        }
+    });
+}
 
+if (BotonCancion) {
+    BotonCancion.addEventListener("click", function () {
+        const nuevaCancion = prompt("Escribe tu nueva cancion favorita:", CancionFavorita.textContent.trim());
+        if (nuevaCancion !== null && nuevaCancion.trim() !== "") {
+            const limpio = nuevaCancion.trim();
+            CancionFavorita.textContent = limpio;
+            if (inputCancionFavorita) inputCancionFavorita.value = limpio;
+            mostrarGuardarPerfil();
+        }
+    });
+}
 
-    //unir todos los elementosuwu
-    nuevaPublicacion.appendChild(titulo);
-    nuevaPublicacion.appendChild(texto);
-    nuevaPublicacion.appendChild(comentarios);
-
-    //agregar la publi al muro osiosiosi
-    Muro.appendChild(nuevaPublicacion);
-
-    //limpiarrr el formulariozz
-    FormularioPublicacion.reset();
-
-});
-
-//cambiar foto de perfil ouyeaosiosi
+// Subir foto de perfil al servidor
 const FotoPerfil = document.querySelector("#FotoPerfil");
 const CambiarFoto = document.querySelector("#CambiarFoto");
 const ArchivoFoto = document.querySelector("#ArchivoFoto");
+const FormFotoPerfil = document.querySelector("#FormFotoPerfil");
 
-//pues para abrir el selector de imag4enes 
-CambiarFoto.addEventListener("click", function(){
-    ArchivoFoto.click();
-});
-
-//Detectar cuando se selecciona una imagen
-ArchivoFoto.addEventListener("change", function(){
-    const archivo = ArchivoFoto.files[0];
-    if (!archivo){
-        return;
-    }
-    //comprobar imagen
-    if (!archivo.type.startsWith("image/")){
-        ArchivoFoto.value = "";
-        return;
-    }
-
-    //mostrar new fotoUWU
-    FotoPerfil.src = URL.createObjectURL(archivo);
-});
-
-//ver amigos
-BotonVerAmigos.addEventListener("click", function(){
-    window.location.href= "amigos.html";
-});
-//funcion bonus
-const bn=document.querySelector("#bonus");
-isBtn=document.querySelector("#insertar");
-isBtn.addEventListener("click", () => {
-    bn.classList.toggle("solidSnake");
+if (CambiarFoto && ArchivoFoto) {
+    CambiarFoto.addEventListener("click", function () {
+        ArchivoFoto.click();
     });
-function insertarBonus(){
-    const txt=document.querySelector("#texto").value;
-    const rs=document.querySelector("#resultado");
-    const nuevaEdicion=document.createElement("div");
-    nuevaEdicion.innerHTML=txt;
+}
+
+if (ArchivoFoto) {
+    ArchivoFoto.addEventListener("change", function () {
+        const archivo = ArchivoFoto.files[0];
+        if (!archivo) return;
+
+        if (!archivo.type.startsWith("image/")) {
+            ArchivoFoto.value = "";
+            return;
+        }
+
+        if (FotoPerfil) {
+            FotoPerfil.src = URL.createObjectURL(archivo);
+        }
+
+        if (FormFotoPerfil) {
+            FormFotoPerfil.submit();
+        }
+    });
+}
+
+// Función bonus
+const bn = document.querySelector("#bonus");
+const isBtn = document.querySelector("#insertar");
+if (isBtn && bn) {
+    isBtn.addEventListener("click", () => {
+        bn.classList.toggle("solidSnake");
+    });
+}
+
+function insertarBonus() {
+    const txt = document.querySelector("#texto").value;
+    const rs = document.querySelector("#resultado");
+    const nuevaEdicion = document.createElement("div");
+    nuevaEdicion.innerHTML = txt;
     rs.appendChild(nuevaEdicion);
 }

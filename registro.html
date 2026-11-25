@@ -22,28 +22,25 @@
         <p>Únete a nuestra comunidad digital</p>
 
          <!-- conexión con PHP -->
-        <form id="FormularioCreaCuenta"
-        method="POST"
-        action="PHP/registro.php">
-        <form id="FormularioCreaCuenta" method="post">
+        <form id="FormularioCreaCuenta" method="POST" action="php/registro.php">
 
-        <label for="NombreUsuario">Nombre de Usuario: </label><br>
-        <input type="text" id="NombreUsuario" name="NvoNombreUsuario" minlength="3"><br>
+            <label for="NombreUsuario">Nombre de Usuario: </label><br>
+            <input type="text" id="NombreUsuario" name="NvoNombreUsuario" minlength="3" required><br>
 
-        <label for="Correo">Correo Electronico: </label><br>
-        <input type="email" id="Correo" name="NvoCorreo"><br>
+            <label for="Correo">Correo Electronico: </label><br>
+            <input type="email" id="Correo" name="NvoCorreo" required><br>
 
-        <label for="Contraseña"> Contraseña: </label><br>
-        <input type="password" id="Contraseña" name="NvaContraseña" minlength="8"><br>
+            <label for="Contraseña"> Contraseña: </label><br>
+            <input type="password" id="Contraseña" name="NvaContraseña" minlength="8" required><br>
 
-        <img class="input lock" src="includes/PwEye.png" alt="Mostrar contraseña">
+            <img class="input lock" src="includes/PwEye.png" alt="Mostrar contraseña">
 
-        <label for="ConfirmarContraseña">Confirmar Contraseña: </label><br>
-        <input type="password" id="ConfirmarContraseña" name="ConfirmarContraseña" minlength="8"><br>
-        
-        <img class="input lock" src="includes/PwEye.png" alt="Mostrar contraseña">
+            <label for="ConfirmarContraseña">Confirmar Contraseña: </label><br>
+            <input type="password" id="ConfirmarContraseña" name="ConfirmarContraseña" minlength="8" required><br>
+            
+            <img class="input lock" src="includes/PwEye.png" alt="Mostrar contraseña">
 
-        <input type="submit" value="CREAR CUENTA">
+            <input type="submit" value="CREAR CUENTA">
 
         </form>
 

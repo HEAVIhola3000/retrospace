@@ -3,7 +3,7 @@
 
 session_start();
 
-require_once "conexion.php";
+require_once __DIR__ . "/conexiones.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
