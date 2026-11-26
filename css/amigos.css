@@ -6,13 +6,12 @@ header {
     background-color: #090714;
     background-image: url('https://cdnb.artstation.com/p/assets/images/images/014/665/033/original/yargon-kerman-webp-net-gifmaker-39.gif?1544919451');
     background-position: center;
-    background-size: cover; /*para que abarque todo el header*/
+    background-size: cover;
     background-repeat: no-repeat;
     padding: 45px 15px;
     overflow: hidden;
 }
 
-/* Capa oscura sutil encima del gif para que el texto neón resalte y no se pierda */
 header::before {
     content: "";
     position: absolute;
@@ -21,9 +20,24 @@ header::before {
     z-index: 1;
 }
 
-header h1, header p {
+header h1 {
     position: relative;
     z-index: 2;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 50px;
+    color: #00FF2F;
+    text-shadow: 0 0 10px #D600FF, 0 0 20px #D600FF, 0 0 30px #D600FF, 0 0 40px #D600FF;
+    margin: 0;
+}
+
+header p {
+    position: relative;
+    z-index: 2;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    color: #D600FF;
+    letter-spacing: 2px;
+    margin: 8px 0 0 0;
 }
 
 body {
@@ -31,45 +45,21 @@ body {
     color: #00FF2F;
     text-align: center;
     font-family: 'Share Tech Mono', monospace;
-}
-
-main {
-    display: grid;
-    /* columna izquierda de 350px para buscar, columna derecha para solicitudes y amigos */
-    grid-template-columns: 350px 1fr; 
-    /*definimos las areas para ubicar cada seccion visualmente */
-    grid-template-areas: 
-        "buscar solicitudes"
-        "buscar mis-amigos";
-    gap: 30px;
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-    text-align: left;
-}
-
-main section h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-    color: #00FF2F;
-    text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF;
-    margin-top: 0;
-    margin-bottom: 8px;
-    text-align: center;
+    margin: 0;
 }
 
 nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px; 
-  border-top: 2px solid #ff007f;  
-  border-bottom: 2px solid #ff007f; 
-  padding: 12px;
-  box-shadow: 0 0 25px rgba(255, 0, 127, 0.4); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    border-top: 2px solid #ff007f;
+    border-bottom: 2px solid #ff007f;
+    padding: 12px;
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4);
 }
 
-nav a{
+nav a {
     color: #00FF2F;
     text-decoration: none;
     font-size: 18px;
@@ -84,54 +74,69 @@ nav a:hover {
     transform: translateY(-3px);
 }
 
-/* conectamos cada seccion con su lugar en el grid y les damos su estilo individual */
-#SeccionBuscarAmigos {
+main {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    grid-template-areas:
+        "buscar solicitudes"
+        "buscar amigos"
+        "explorar amigos";
+    align-items: start;
+    gap: 28px;
+    max-width: 1200px;
+    margin: 36px auto;
+    padding: 0 20px;
+    text-align: left;
+}
+
+#BuscadorAmigos {
     grid-area: buscar;
-    background-color: rgba(9, 7, 20, 0.85);
-    border: 2px solid #ff007f;
-    border-radius: 8px;
-    padding: 25px;
-    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
 }
 
-#SeccionSolicitudes {
+#SolicitudesPendientes {
     grid-area: solicitudes;
-    background-color: rgba(9, 7, 20, 0.85);
-    border: 2px solid #ff007f;
-    border-radius: 8px;
-    padding: 25px;
-    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
 }
 
-#SeccionMisAmigos {
-    grid-area: mis-amigos;
-    background-color: rgba(9, 7, 20, 0.85);
-    border: 2px solid #ff007f;
-    border-radius: 8px;
-    padding: 25px;
-    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
+#ExplorarUsuarios {
+    grid-area: explorar;
 }
 
+#ListaMisAmigos {
+    grid-area: amigos;
+}
 
+#BuscadorAmigos,
+#SolicitudesPendientes,
+#ListaMisAmigos,
+#ExplorarUsuarios {
+    background-color: rgba(9, 7, 20, 0.88);
+    border: 2px solid #ff007f;
+    border-radius: 8px;
+    padding: 22px;
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4);
+}
 
-/* selecciona el parrafo introductorio de cada contenedor */
-#ContenedorBuscarAmigos > p, #ContenedorSolicitudes > p, #ContenedorMisAmigos > p {
-    color: #D600FF;
-    font-size: 20px;
+main h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    color: #00FF2F;
+    text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF;
+    margin-top: 0;
+    margin-bottom: 16px;
     text-align: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px dashed #ff007f; 
 }
 
-#FormularioBusqueda {
+/* Buscador */
+#BuscadorAmigos form {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 20px;
+    align-items: center;
 }
 
-#BuscarAmigo {
-    flex: 1; /* ocupa todo el espacio disponible junto al boton */
+#BuscadorAmigos input[type="text"] {
+    flex: 1;
+    min-width: 160px;
     padding: 10px 12px;
     background-color: #05040a;
     border: 1px solid #00FF2F;
@@ -143,77 +148,75 @@ nav a:hover {
     transition: all 0.3s ease;
 }
 
-#BuscarAmigo:focus {
+#BuscadorAmigos input[type="text"]:focus {
     border-color: #D600FF;
     box-shadow: 0 0 10px #D600FF;
 }
 
-.solicitud {
+#BuscadorAmigos a {
+    color: #D600FF;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+#BuscadorAmigos a:hover {
+    color: #00FF2F;
+}
+
+/* Tarjetas de usuarios en solicitudes, amigos y explorar */
+.tarjeta-amigo {
     display: flex;
-    align-items: center;      
-    justify-content: space-between;
-    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
     background-color: #05040a;
     border: 1px solid #00FF2F;
     border-radius: 6px;
-    padding: 12px 15px;
+    padding: 12px 14px;
     margin-bottom: 12px;
     box-shadow: 0 0 12px rgba(0, 255, 47, 0.12);
 }
 
-.solicitud img {
-    width: 55px;
-    height: 55px;
+.tarjeta-amigo:last-child {
+    margin-bottom: 0;
+}
+
+.tarjeta-amigo img {
+    width: 56px;
+    height: 56px;
     object-fit: cover;
     border-radius: 50%;
     border: 2px solid #ff007f;
 }
 
-.solicitud p {
-    flex: 1; /*empuja los botones hacia la derecha*/
-    margin: 0;
-    color: #ffffff;
-    font-size: 15px;
-}
-
-#ContenedorMisAmigos {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-}
-
-/* para que el h2 y el p introductorio sigan abarcando todo el ancho */
-#ContenedorMisAmigos > h2, #ContenedorMisAmigos > p {
-    grid-column: 1/-1;
-}
-
-.Amigo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background-color: #05040a;
-    border: 1px solid #00FF2F;
-    border-radius: 6px;
-    padding: 12px 15px;
-    box-shadow: 0 0 12px rgba(0, 255, 47, 0.12);
-}
-
-.Amigo img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #D600FF;
-}
-
-.Amigo p {
+.tarjeta-amigo > div {
     flex: 1;
-    margin: 0;
-    color: #ffffff;
-    font-size: 15px;
+    min-width: 140px;
 }
 
-/* estilo general para todos los botones del main */
+.tarjeta-amigo a {
+    color: #00FF2F;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.tarjeta-amigo a:hover {
+    color: #D600FF;
+    text-shadow: 0 0 8px #D600FF;
+}
+
+.tarjeta-amigo p {
+    margin: 4px 0 0 0;
+    color: #D600FF;
+    font-size: 13px;
+}
+
+.tarjeta-amigo span {
+    color: #00FF2F;
+    font-size: 13px;
+}
+
+/* Botones */
 main button {
     padding: 8px 14px;
     background-color: #ff007f;
@@ -226,7 +229,7 @@ main button {
     cursor: pointer;
     box-shadow: 0 0 10px rgba(255, 0, 127, 0.45);
     transition: all 0.3s ease;
-    white-space: nowrap; /* evita que el texto del boton se parta en dos lineas */
+    white-space: nowrap;
 }
 
 main button:hover {
@@ -236,27 +239,15 @@ main button:hover {
     transform: translateY(-2px);
 }
 
-/*diseño unicamente para el boton rechazar la solicitud de amistad*/
-button.RechazarSolicitud {
-    background-color: transparent;
-    border: 1px solid #ff007f;
-    color: #ff007f;
-}
-
-button.RechazarSolicitud:hover {
-    background-color: #ff007f;
-    color: #ffffff;
-    box-shadow: 0 0 12px rgba(255, 0, 127, 0.7);
-}
-
 footer {
     background-color: #090714;
     padding: 20px;
-    border-top: 2px solid #ff007f;  
-    box-shadow: 0 -5px 25px rgba(255, 0, 127, 0.4); 
+    border-top: 2px solid #ff007f;
+    box-shadow: 0 -5px 25px rgba(255, 0, 127, 0.4);
 }
 
-footer p{
+footer p {
     font-family: 'Share Tech Mono', monospace;
     letter-spacing: 1px;
+    margin: 0;
 }

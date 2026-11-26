@@ -6,13 +6,12 @@ header {
     background-color: #090714;
     background-image: url('https://cdnb.artstation.com/p/assets/images/images/014/665/033/original/yargon-kerman-webp-net-gifmaker-39.gif?1544919451');
     background-position: center;
-    background-size: cover; /*para que abarque todo el header*/
+    background-size: cover;
     background-repeat: no-repeat;
     padding: 45px 15px;
     overflow: hidden;
 }
 
-/* Capa oscura sutil encima del gif para que el texto neón resalte y no se pierda */
 header::before {
     content: "";
     position: absolute;
@@ -21,9 +20,26 @@ header::before {
     z-index: 1;
 }
 
-header h1, header p {
+header h1,
+header p {
     position: relative;
     z-index: 2;
+}
+
+header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 50px;
+    color: #00FF2F;
+    text-shadow: 0 0 10px #D600FF, 0 0 20px #D600FF, 0 0 30px #D600FF, 0 0 40px #D600FF;
+    margin: 0;
+}
+
+header p {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    color: #D600FF;
+    letter-spacing: 2px;
+    margin: 8px 0 0 0;
 }
 
 body {
@@ -31,20 +47,22 @@ body {
     color: #00FF2F;
     text-align: center;
     font-family: 'Share Tech Mono', monospace;
+    margin: 0;
 }
 
 nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px; 
-  border-top: 2px solid #ff007f;  
-  border-bottom: 2px solid #ff007f; 
-  padding: 12px;
-  box-shadow: 0 0 25px rgba(255, 0, 127, 0.4); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-top: 2px solid #ff007f;
+    border-bottom: 2px solid #ff007f;
+    padding: 12px;
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4);
 }
 
-nav a{
+nav a {
     color: #00FF2F;
     text-decoration: none;
     font-size: 18px;
@@ -59,127 +77,121 @@ nav a:hover {
     transform: translateY(-3px);
 }
 
+/* Estructura principal: barra lateral izquierda + amigos/muro a la derecha */
 main {
     display: grid;
-    /* Definimos dos columnas arriba (perfil y amigos) y una sola columna grande abajo para el muro */
-    grid-template-columns: 320px 1fr; 
-    grid-template-areas: "lateral amigos" "muro muro";
-    gap: 30px;
-    max-width: 1100px;
-    margin: 40px auto;
+    grid-template-columns: 320px minmax(0, 1fr);
+    grid-template-areas:
+        "lateral amigos"
+        "lateral muro"
+        "extra   extra";
+    align-items: start;
+    gap: 25px;
+    max-width: 1150px;
+    margin: 35px auto;
     padding: 0 20px;
     text-align: left;
 }
 
-
+/* Barra lateral izquierda */
 #Barralateral {
-    grid-area: lateral; /* Se coloca arriba a la izquierda */
+    grid-area: lateral;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    min-width: 0;
 }
 
-/* Tarjeta contenedora de la foto de perfil */
-#ImagenPerfil {
-    background-color: rgba(9, 7, 20, 0.85);
+#ImagenPerfil,
+#InfoPersonal,
+#Amigos,
+#Muro {
+    background-color: rgba(9, 7, 20, 0.88);
     border: 2px solid #ff007f;
     border-radius: 8px;
     padding: 20px;
-    text-align: center;
     box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
+    min-width: 0;
 }
 
-/* Estilo para la imagen de perfil (dándole toque de monitor retro) */
+#ImagenPerfil {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
 #FotoPerfil {
     width: 140px;
     height: 140px;
     object-fit: cover;
-    border-radius: 50%; /* La hace circular */
+    border-radius: 50%;
     border: 2px solid #00FF2F;
     box-shadow: 0 0 10px #00FF2F;
-    margin-bottom: 15px;
-}
-
-/* Tarjeta contenedora de la información personal (Usuario, Artista, Canción) */
-#InfoPersonal {
-    background-color: rgba(9, 7, 20, 0.85);
-    border: 2px solid #ff007f;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
 }
 
 #InfoPersonal p {
-    font-size: 20px;
+    font-size: 17px;
     color: #D600FF;
-    margin-top: 12px;
-    margin-bottom: 4px;
+    margin: 14px 0 6px 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
+#InfoPersonal p:first-child {
+    margin-top: 0;
+}
 
+/* Sección de amigos */
 #Amigos {
-    grid-area: amigos; /* Se coloca arriba a la derecha (junto al perfil) */
-    margin-top: 0;     /* Quitamos el margen anterior para que alineen bien arriba */
-    background-color: rgba(9, 7, 20, 0.85);
-    border: 2px solid #ff007f;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
-    text-align: left;
+    grid-area: amigos;
 }
 
-
-#ContenedorAmigos h2 {
+#ContenedorAmigos h2,
+#Muro > h2 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 22px;
+    font-size: 20px;
     color: #00FF2F;
     text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF;
+    margin-top: 0;
     margin-bottom: 15px;
     text-align: center;
 }
 
-
 #ContenedorAmigos p {
     color: #D600FF;
-    font-size: 20px;
+    font-size: 16px;
     margin: 8px 0;
-    padding: 6px 10px;
+    padding: 8px 12px;
     background-color: #05040a;
-    border-left: 2px solid #00FF2F; /* Un pequeño detalle de terminal a la izquierda */
+    border-left: 2px solid #00FF2F;
+    border-radius: 4px;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
+#BotonVerAmigos {
+    margin-top: 12px;
+}
+
+/* Sección del muro */
 #Muro {
-    grid-area: muro; /* Se extiende abajo abarcando todo el ancho de las dos columnas */
-    background-color: rgba(9, 7, 20, 0.85);
-    border: 2px solid #ff007f;
-    border-radius: 8px;
+    grid-area: muro;
     padding: 25px;
-    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
-    text-align: left;
 }
 
-/* Título principal del Muro */
-#Muro h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 22px;
-    color: #00FF2F;
-    text-shadow: 0 0 5px #D600FF, 0 0 10px #D600FF;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-/* Formulario para crear publicaciones */
 #FormularioPublicacion {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px dashed #ff007f; /* Línea que divide */
+    margin-bottom: 28px;
+    padding-bottom: 22px;
+    border-bottom: 1px dashed #ff007f;
 }
 
-/* Campos de texto en crear publicacion */
-#FormularioPublicacion input[type="text"], #FormularioPublicacion textarea {
+#FormularioPublicacion input[type="text"],
+#FormularioPublicacion textarea {
     width: 100%;
     padding: 12px;
     background-color: #05040a;
@@ -193,13 +205,18 @@ main {
     transition: all 0.3s ease;
 }
 
-/* efecto de resplandor al seleccionar los campos de texto */
-#FormularioPublicacion input[type="text"]:focus, #FormularioPublicacion textarea:focus {
+#FormularioPublicacion textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+#FormularioPublicacion input[type="text"]:focus,
+#FormularioPublicacion textarea:focus {
     border-color: #D600FF;
     box-shadow: 0 0 10px #D600FF;
 }
 
-/* Tarjeta individual de cada publicación */
+/* Tarjeta individual de publicación */
 article.publicacion {
     background-color: #05040a;
     border: 1px solid #00FF2F;
@@ -207,151 +224,226 @@ article.publicacion {
     padding: 18px;
     margin-bottom: 20px;
     box-shadow: 0 0 15px rgba(0, 255, 47, 0.15);
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
-/* titulo de la publicacion*/
+article.publicacion:last-child {
+    margin-bottom: 0;
+}
+
 article.publicacion h3 {
     font-family: 'Orbitron', sans-serif;
     font-size: 16px;
     color: #00FF2F;
+    margin-top: 0;
     margin-bottom: 8px;
-}
- /* parrafo de la publicacion */
-article.publicacion  p {
-    color: #ffffff;
-    font-size: 15px;
-    margin-bottom: 15px;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
-/* Sección de comentarios dentro de la publicación */
+article.publicacion > p {
+    color: #ffffff;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* Comentarios */
 .listaComentarios {
-    background-color: rgba(9, 7, 20, 0.6);
+    background-color: rgba(9, 7, 20, 0.75);
     border-left: 2px solid #D600FF;
-    padding: 10px 12px;
+    border-radius: 4px;
+    padding: 10px 14px;
     margin-bottom: 15px;
     font-size: 14px;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .listaComentarios p {
     color: #D600FF;
-    margin: 4px 0;
+    margin: 6px 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .listaComentarios strong {
     color: #00FF2F;
 }
 
-/* Formulario pequeño para escribir comentarios */
+/* Formulario de comentario */
 article.publicacion form {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
-
-article.publicacion input[id="EscribirComentario"] {
+#EscribirComentario {
     flex: 1;
-    padding: 8px 12px;
+    min-width: 0;
+    padding: 9px 12px;
     background-color: #090714;
     border: 1px solid #00FF2F;
     color: #00FF2F;
     font-family: 'Share Tech Mono', monospace;
     font-size: 14px;
     border-radius: 4px;
+    box-sizing: border-box;
     outline: none;
+    transition: all 0.3s ease;
 }
 
-/*diseño de todos los botones*/
-#Barralateral button, #ContenedorAmigos button, #FormularioPublicacion button[type="submit"], article.publicacion button[type="submit"] {
+#EscribirComentario:focus {
+    border-color: #D600FF;
+    box-shadow: 0 0 10px #D600FF;
+}
+
+/* Botones principales del perfil */
+#Barralateral button,
+#ContenedorAmigos button,
+#FormularioPublicacion button[type="submit"],
+article.publicacion button[type="submit"] {
     width: 100%;
-    padding: 10px;
-    background-color: #ff007f;                   
-    color: #ffffff;                              
+    padding: 10px 14px;
+    background-color: #ff007f;
+    color: #ffffff;
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(255, 0, 127, 0.5); 
-    transition: all 0.3s ease;                   
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+    transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
-/* Efecto hover de los botones */
-#Barralateral button:hover, #ContenedorAmigos button:hover, #FormularioPublicacion button[type="submit"]:hover, article.publicacion button[type="submit"]:hover {
-    background-color: #00FF2F;                  
-    color: #090714;                             
-    box-shadow: 0 0 15px #00FF2F, 0 0 25px #00FF2F;
-    transform: translateY(-2px);                 
+article.publicacion button[type="submit"] {
+    width: auto;
+    padding: 10px 18px;
 }
-#insertar{
-    width: 30px;
-     margin-top: 8px;
+
+#Barralateral button:hover,
+#ContenedorAmigos button:hover,
+#FormularioPublicacion button[type="submit"]:hover,
+article.publicacion button[type="submit"]:hover {
+    background-color: #00FF2F;
+    color: #090714;
+    box-shadow: 0 0 15px #00FF2F, 0 0 25px #00FF2F;
+    transform: translateY(-2px);
+}
+
+/* Bloque bonus / insertar / resultado */
+main > #insertar,
+main > #bonus,
+main > #resultado {
+    grid-column: 1 / -1;
+}
+
+#insertar {
+    justify-self: start;
     padding: 6px 12px;
-    background-color: #05040a;             
-    color: #D600FF;                          
+    background-color: #05040a;
+    color: #D600FF;
     font-family: 'Share Tech Mono', monospace;
-    font-size: 13px;
-    letter-spacing: 1px;
-    border: 1px solid #D600FF;                
+    font-size: 14px;
+    border: 1px solid #D600FF;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
-#insertar:hover{
-    background-color: #D600FF;                 
-    color: #05040a;                            
-    box-shadow: 0 0 10px #D600FF, 0 0 20px #D600FF; 
+
+#insertar:hover {
+    background-color: #D600FF;
+    color: #05040a;
+    box-shadow: 0 0 10px #D600FF, 0 0 20px #D600FF;
 }
-#texto{
-    background-color: rgba(9, 7, 20, 0.85);
-    border: 2px solid #00ff2f;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
-    font-size: 14px;
-    color: #D600FF;
-    margin-top: 12px;
-    margin-bottom: 4px;
-}
-#bonus{
-    background-color: rgba(9, 7, 20, 0.85);
+
+#bonus {
+    background-color: rgba(9, 7, 20, 0.88);
     border: 2px solid #ff007f;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
 }
-#guardar{
+
+#texto {
+    width: 100%;
+    min-height: 80px;
+    background-color: #05040a;
+    border: 2px solid #00FF2F;
+    border-radius: 6px;
+    padding: 12px;
+    box-sizing: border-box;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    color: #D600FF;
+    margin-bottom: 12px;
+    outline: none;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+#guardar {
     width: 100%;
     padding: 10px;
-    background-color: #ff007f;                   
-    color: #ffffff;                              
+    background-color: #ff007f;
+    color: #ffffff;
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
     font-size: 14px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(255, 0, 127, 0.5); 
-    transition: all 0.3s ease;                   
-}
-#guardar:hover{
-    background-color: #00FF2F;                  
-    color: #090714;                             
-    box-shadow: 0 0 15px #00FF2F, 0 0 25px #00FF2F;
-    transform: translateY(-2px);                 
-}
-.solidSnake{
-    display: none;
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+    transition: all 0.3s ease;
 }
 
+#guardar:hover {
+    background-color: #00FF2F;
+    color: #090714;
+    box-shadow: 0 0 15px #00FF2F, 0 0 25px #00FF2F;
+    transform: translateY(-2px);
+}
+
+#resultado:not(:empty) {
+    background-color: rgba(9, 7, 20, 0.88);
+    border: 1px solid #00FF2F;
+    border-radius: 8px;
+    padding: 16px;
+    color: #ffffff;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.solidSnake {
+    display: none;
+}
 
 footer {
     background-color: #090714;
     padding: 20px;
-    border-top: 2px solid #ff007f;  
-    box-shadow: 0 -5px 25px rgba(255, 0, 127, 0.4); /* Resplandor de neón */
+    border-top: 2px solid #ff007f;
+    box-shadow: 0 -5px 25px rgba(255, 0, 127, 0.4);
 }
-footer p{
+
+footer p {
     font-family: 'Share Tech Mono', monospace;
     letter-spacing: 1px;
+    margin: 0;
+}
+
+/* Adaptación en pantallas medianas y pequeñas*/
+@media (max-width: 820px) {
+    main {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "lateral"
+            "amigos"
+            "muro"
+            "extra";
+    }
 }

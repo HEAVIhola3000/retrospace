@@ -198,7 +198,6 @@ try {
             <p style="color: #ff007f;"><?php echo e($error); ?></p>
         <?php endif; ?>
 
-        //buscador de usuarios
         <section id="BuscadorAmigos">
             <h2>Buscar personas en RetroSpace</h2>
             <form action="amigos.php" method="GET">
@@ -210,7 +209,6 @@ try {
             </form>
         </section>
 
-        //solicitudes recibidas
         <section id="SolicitudesPendientes">
             <h2>Solicitudes recibidas (<?php echo count($solicitudesRecibidas); ?>)</h2>
             <?php if (empty($solicitudesRecibidas)): ?>
@@ -240,7 +238,6 @@ try {
             <?php endif; ?>
         </section>
 
-        //lista de amnigos recibidas
         <section id="ListaMisAmigos">
             <h2>Mis Amigos (<?php echo count($amigos); ?>)</h2>
             <?php if (empty($amigos)): ?>
@@ -266,7 +263,6 @@ try {
             <?php endif; ?>
         </section>
 
-        //explorar usuarios
         <section id="ExplorarUsuarios">
             <h2><?php echo $busqueda !== "" ? "Resultados de búsqueda" : "Comunidad RetroSpace"; ?></h2>
             <?php if (empty($usuariosExplorar)): ?>
@@ -313,4 +309,4 @@ try {
         <p>RetroSpace - 2026 - Proyecto Escolar</p>
     </footer>
 </body>
-</html>
+</html>s
